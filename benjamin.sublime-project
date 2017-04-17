@@ -1,0 +1,29 @@
+{
+	"build_systems":
+	[
+		{
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"name": "Anaconda Python Builder",
+			"selector": "source.python",
+			"shell_cmd": "\"/Users/johnshen/.virtualenvs/benjamin/bin/python\" -u \"$file\""
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"anaconda_linter_mark_style": "none",
+		"python_interpreter": "~/.virtualenvs/benjamin/bin/python",
+		"complete_all_parameters": true,
+		"enable_signatures_tooltip": true,
+		"merge_signatures_and_doc": true,
+		"anaconda_linter_phantoms": true,
+		"validate_imports": true,
+		"save_on_focus_lost": true,
+		"ensure_newline_at_eof_on_save": true
+	}
+}
