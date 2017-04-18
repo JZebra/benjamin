@@ -4,15 +4,15 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class VirtueSet(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return "<VirtueSet belonging to user {0}".format(self.user.id)
 
 
 class Virtue(models.Model):
-    user = models.ForeignKey(User)
-    virtue_set = models.ForeignKey(VirtueSet)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    virtue_set = models.ForeignKey(VirtueSet, on_delete=models.CASCADE)
     title = models.TextField()
     image = models.ImageField()
     personal_image = models.ImageField()
@@ -26,8 +26,8 @@ class Virtue(models.Model):
 
 
 class VirtueEntry(models.Model):
-    user = models.ForeignKey(User)
-    virtue = models.ForeignKey(Virtue)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    virtue = models.ForeignKey(Virtue, on_delete=models.CASCADE)
     date = models.DateTimeField()
     value = models.IntegerField()
 
