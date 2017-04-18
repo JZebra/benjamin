@@ -23,7 +23,12 @@
 		"merge_signatures_and_doc": true,
 		"anaconda_linter_phantoms": true,
 		"validate_imports": true,
+		"pep8_ignore":
+		[
+			"E501"
+		],
 		"save_on_focus_lost": true,
-		"ensure_newline_at_eof_on_save": true
+		"ensure_newline_at_eof_on_save": true,
+		"show_full_path": true,
 	}
 }
