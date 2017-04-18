@@ -14,6 +14,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class VirtueSetSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
     user = serializers.IntegerField(read_only=True)
 
     def create(self, validated_data):
@@ -21,15 +22,16 @@ class VirtueSetSerializer(serializers.Serializer):
 
 
 class VirtueSerializer(serializers.Serializer):
-    user = serializers.IntegerField(read_only=True, required=True)
+    id = serializers.IntegerField(read_only=True)
+    user = serializers.IntegerField(required=True)
     virtue_set = serializers.IntegerField(required=True)
-    title = serializers.TextField(required=True)
+    title = serializers.CharField(required=True)
     image = serializers.ImageField(required=False)
     personal_image = serializers.ImageField(required=False)
-    description = serializers.TextField(required=False)
-    personal_description = serializers.TextField(required=False)
-    quote = serializers.TextField(required=False)
-    personal_quote = serializers.TextField(required=False)
+    description = serializers.CharField(required=False)
+    personal_description = serializers.CharField(required=False)
+    quote = serializers.CharField(required=False)
+    personal_quote = serializers.CharField(required=False)
 
     def create(self, validated_data):
         return Virtue.objects.create(**validated_data)
@@ -48,8 +50,9 @@ class VirtueSerializer(serializers.Serializer):
 
 
 class VirtueEntrySerializer(serializers.Serializer):
-    user = serializers.IntegerField(read_only=True, required=True)
-    virtue = serializers.IntegerField(read_only=True, required=True)
+    id = serializers.IntegerField(read_only=True)
+    user = serializers.IntegerField(required=True)
+    virtue = serializers.IntegerField(required=True)
     date = serializers.DateTimeField(required=True)
     value = serializers.IntegerField(required=True)
 
