@@ -4,7 +4,10 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class VirtueSet(models.Model):
-    pass
+    user = models.ForeignKey(User)
+
+    def __str__(self):
+        return "<VirtueSet belonging to user {0}".format(self.user.id)
 
 
 class Virtue(models.Model):
@@ -18,9 +21,15 @@ class Virtue(models.Model):
     quote = models.TextField()
     personal_quote = models.TextField()
 
+    def __str__(self):
+        return "<Virtue id: {0}".format(self.id)
+
 
 class VirtueEntry(models.Model):
     user = models.ForeignKey(User)
     virtue = models.ForeignKey(Virtue)
     date = models.DateTimeField()
     value = models.IntegerField()
+
+    def __str__(self):
+        return "<VirtueEntry id: {0}".format(self.id)
