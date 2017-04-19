@@ -18,6 +18,7 @@ from django.contrib import admin
 
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
+from rest_framework.authtoken import views
 
 from benjamin.checklist.views import VirtueSetViewSet, VirtueDetailViewSet
 
@@ -32,6 +33,7 @@ schema_view = get_schema_view(title='Benjamin API')
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
+    url(r'^api-token-auth', views.obtain_auth_token),
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^schema/', schema_view)
 ]

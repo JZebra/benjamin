@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Third party apps
     'django_extensions',
     'rest_framework',
+    'rest_framework.authtoken',
     # Benjamin apps
     'benjamin.checklist',
 ]
