@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
 import Button from './Button';
+import LoginForm from './LoginForm';
 
 class App extends Component {
+  getVirtueSets() {
+    fetch('http://127.0.0.1:8000/virtue_sets/', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Token ' + localStorage.token,
+        'Accept': 'application/json'
+      }
+    }).then((res) => {
+      return res.json();
+    })
+  }
+
 
   render() {
     return (
@@ -14,6 +27,7 @@ class App extends Component {
           Hello world!
         </p>
         <Button onClick={()=>console.log('clicked')} value="click here"/>
+        <LoginForm afterLogin={this.getVirtueSets}/>
       </div>
     );
   }
