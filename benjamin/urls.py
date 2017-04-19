@@ -16,15 +16,17 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.routers import DefaultRouter
 
-from benjamin.checklist.views import VirtueSetView, VirtueView
+from benjamin.checklist.views import VirtueSetViewSet, VirtueDetailViewSet
+
+# Create a router and register viewsets
+router = DefaultRouter()
+router.register(r'virtues', VirtueDetailViewSet, base_name='virtue')
+router.register(r'virtue_sets', VirtueSetViewSet, base_name='virtue_set')
 
 urlpatterns = [
+    url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^virtues/(?P<pk>[0-9]+)$', VirtueView.as_view()),
-    url(r'^virtue_sets/(?P<user_id>[0-9]+)$', VirtueSetView.as_view()),
+    url(r'^api-auth/', include('rest_framework.urls')),
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)

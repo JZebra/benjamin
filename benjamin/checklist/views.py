@@ -1,47 +1,37 @@
-from django.http import Http404
-
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import permissions, viewsets
 
 from benjamin.checklist.models import Virtue, VirtueSet
+from benjamin.checklist.permissions import IsOwner
 from benjamin.checklist.serializers import VirtueSerializer, VirtueSetSerializer
 
 
-class VirtueSetView(APIView):
+class VirtueSetViewSet(viewsets.ModelViewSet):
+    """
+     This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
+    serializer_class = VirtueSetSerializer
 
-    def get(self, request, user_id, format=None):
-        try:
-            virtue_sets = VirtueSet.objects.filter(user_id=user_id)
-        except VirtueSet.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+    def get_queryset(self):
+        user = self.request.user
+        return VirtueSet.objects.filter(user=user)
 
-        serializer = VirtueSetSerializer(virtue_sets, many=True)
-        return Response(serializer.data)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
-class VirtueView(APIView):
+class VirtueDetailViewSet(viewsets.ModelViewSet):
+    """
+     This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
+    serializer_class = VirtueSerializer
 
-    def get_object(self, pk):
-        try:
-            return Virtue.objects.get(pk=pk)
-        except Virtue.DoesNotExist:
-            raise Http404
+    def get_queryset(self):
+        user = self.request.user
+        return Virtue.objects.filter(user=user)
 
-    def get(self, request, pk, format=None):
-        virtue = self.get_object(pk)
-        serializer = VirtueSerializer(virtue)
-        return Response(serializer.data)
-
-    def put(self, request, pk, format=None):
-        virtue = self.get_object(pk)
-        serializer = VirtueSerializer(virtue, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        virtue = self.get_object(pk)
-        virtue.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
