@@ -1,9 +1,16 @@
+click==6.7
+coreapi==2.3.0
+coreapi-cli==1.0.6
+coreschema==0.0.4
 Django==1.11
 django-extensions==1.7.8
 django-filter==1.0.2
 djangorestframework==3.6.2
 httpie==0.9.9
+itypes==1.1.0
+Jinja2==2.9.6
 Markdown==2.6.8
+MarkupSafe==1.0
 olefile==0.44
 Pillow==4.1.0
 psycopg2==2.7.1
@@ -11,3 +18,4 @@ Pygments==2.2.0
 pytz==2017.2
 requests==2.13.0
 six==1.10.0
+uritemplate==3.0.0
