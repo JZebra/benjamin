@@ -24,6 +24,3 @@ class VirtueSetList extends Component {
 }
 
 export default VirtueSetList;
-
-
-
