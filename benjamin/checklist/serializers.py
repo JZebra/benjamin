@@ -16,6 +16,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class VirtueSetSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     user_id = serializers.IntegerField(read_only=True)
+    title = serializers.CharField(required=True)
 
     def create(self, validated_data):
         return VirtueSet.objects.create(**validated_data)

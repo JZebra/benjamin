@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class VirtueSet(models.Model):
     user = models.ForeignKey(User, related_name='virtue_sets', on_delete=models.CASCADE)
+    title = models.TextField()
 
     def __str__(self):
         return "<VirtueSet belonging to user {0}".format(self.user.id)
