@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Button from './Button';
 import LoginForm from './LoginForm';
+import VirtueSetList from './VirtueSetList';
 
 class App extends Component {
   getVirtueSets() {
@@ -12,8 +13,16 @@ class App extends Component {
         'Accept': 'application/json'
       }
     }).then((res) => {
-      return res.json();
-    })
+      // TODO make list from items in json, pass it into VirtueSetList
+      // return res.json();
+      return this.renderVirtueSetList(res.json());
+    });
+  }
+
+  renderVirtueSetList(json) {
+    return (
+      <VirtueSetList items={json.results} />
+    );
   }
 
 
@@ -27,7 +36,7 @@ class App extends Component {
           Hello world!
         </p>
         <Button onClick={()=>console.log('clicked')} value="click here"/>
-        <LoginForm afterLogin={this.getVirtueSets}/>
+        <LoginForm store={this.props.store} afterLogin={this.getVirtueSets.bind(this)}/>
       </div>
     );
   }

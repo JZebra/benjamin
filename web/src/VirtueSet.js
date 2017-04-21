@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import './VirtueSet.css';
 
+// props: title
+
 class VirtueSet extends Component {
   render() {
     return (
-      <div className='VirtueSet'>
-        <h1>This is a VirtueSet</h1>
-      </div>
+      <li className='VirtueSet'>
+        <h1>This is VirtueSet: {this.props.title}</h1>
+      </li>
     );
   }
 }
 
 export default VirtueSet;
+
+
+
