@@ -13,8 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url, include
-from django.contrib import admin, auth
+from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.edit import CreateView
 
@@ -58,3 +59,10 @@ urlpatterns = [
     # ^accounts/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$ [name='password_reset_confirm']
     # ^accounts/reset/done/$ [name='password_reset_complete']
 ]
+
+# Set up Django-Debug-Toolbar for dev
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
