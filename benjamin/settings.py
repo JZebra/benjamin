@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
     # Benjamin apps
     'benjamin.checklist',
+    'benjamin.registration'
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'benjamin.urls'
+
+LOGIN_REDIRECT_URL = '/'
 
 TEMPLATES = [
     {

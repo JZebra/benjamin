@@ -14,13 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib import admin
+from django.contrib import admin, auth
+from django.contrib.auth import views as auth_views
+from django.views.generic.edit import CreateView
 
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 from rest_framework.authtoken import views
 
 from benjamin.checklist.views import VirtueSetViewSet, VirtueDetailViewSet
+from benjamin.registration.views import index
 
 # Create a router and register viewsets
 router = DefaultRouter()
@@ -31,9 +34,19 @@ router.register(r'virtue_sets', VirtueSetViewSet, base_name='virtue_set')
 schema_view = get_schema_view(title='Benjamin API')
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url(r'^$', index),
+    url(r'^api/', include(router.urls)),
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth/$', views.obtain_auth_token),
     url(r'^api-auth/', include('rest_framework.urls')),
-    url(r'^schema/', schema_view)
+    url(r'^schema/', schema_view),
+    url(r'^register/', CreateView.as_view(
+        template_name='register.html',
+        form_class=auth.forms.UserCreationForm,
+        success_url='/'
+    ), name='register'),
+    # This line will override the custom login/logout routes if placed after login/logout.
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^login/', auth_views.login, name='login'),
+    url(r'^logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
 ]
