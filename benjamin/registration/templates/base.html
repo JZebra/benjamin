@@ -1,3 +1,5 @@
+{% load static %}
+{% load registration_extras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +20,21 @@
 
     <!-- Bootstrap -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+    {# Test #}
+    <link rel="stylesheet" href="web/build/static/css/main.9a0fe4f1.css"></link>
+    <script src="{% static 'js/main.e3d86d8a.js' %}"></script>
+
+    <!-- React css -->
+    <link rel="stylesheet" href="{% with_cache 'main.css' %}"></link>
+
+    <!-- React js -->
+    <!-- <script src="{% with_cache 'main.js' %}"></script> -->
+
 </head>
 <body>
     {% include 'header.html' %}
+
     {% block content %} {% endblock %}
 </body>
 </html>

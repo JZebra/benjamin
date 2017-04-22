@@ -25,6 +25,7 @@ from rest_framework.authtoken import views
 
 from benjamin.checklist.views import VirtueSetViewSet, VirtueDetailViewSet
 from benjamin.registration.views import index
+from benjamin.registration.forms import BenjaminUserCreationForm, BenjaminUserLoginForm
 
 # Create a router and register viewsets
 router = DefaultRouter()
@@ -43,11 +44,11 @@ urlpatterns = [
     url(r'^schema/', schema_view),
     url(r'^register/', CreateView.as_view(
         template_name='register.html',
-        form_class=auth.forms.UserCreationForm,
+        form_class=BenjaminUserCreationForm,
         success_url='/'
     ), name='register'),
-    url(r'^login/', auth_views.login, name='login'),
-    url(r'^logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
+    url(r'^login/', auth_views.login, {'authentication_form': BenjaminUserLoginForm}, name='app_login'),
+    url(r'^logout/', auth_views.logout, {'next_page': '/'}, name='app_logout'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     # Provides the following patterns
     # ^accounts/login/$ [name='login']
