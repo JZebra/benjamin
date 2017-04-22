@@ -67,6 +67,9 @@ ROOT_URLCONF = 'benjamin.urls'
 
 LOGIN_REDIRECT_URL = '/'
 
+# Substitute our custom User model
+AUTH_USER_MODEL = 'registration.User'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -155,3 +158,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = 'benjamin/static/'
+
+STATICFILES_DIRS = (
+    # os.path.join(BASE_DIR, 'benjamin/static/'),
+    os.path.join(BASE_DIR, 'web/build/static/'),
+)
