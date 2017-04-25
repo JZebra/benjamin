@@ -22,3 +22,4 @@ export default class AppState {
         this.virtueSets = virtueSets;
     }
 }
+
