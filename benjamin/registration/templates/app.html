@@ -1,1 +1,12 @@
-<script src="../.."></script>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Benjamin - Be Virtuous!{% endblock %}
+
+{% block content %}
+    {# Div for react app #}
+    <div id="root"></div>
+
+    <!-- React js -->
+    <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
