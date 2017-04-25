@@ -65,7 +65,8 @@ INTERNAL_IPS = '127.0.0.1'
 
 ROOT_URLCONF = 'benjamin.urls'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/app/'
 
 # Substitute our custom User model
 AUTH_USER_MODEL = 'registration.User'

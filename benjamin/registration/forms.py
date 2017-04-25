@@ -1,7 +1,8 @@
-from django.contrib.auth import password_validation
+from django.contrib.auth import authenticate, password_validation
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.forms import EmailField, CharField
+from django.forms import EmailField, CharField, ValidationError
 from django.forms.widgets import EmailInput, PasswordInput
+
 
 from benjamin.registration.models import User
 
@@ -39,7 +40,7 @@ class BenjaminUserCreationForm(UserCreationForm):
 
 
 class BenjaminUserLoginForm(AuthenticationForm):
-    email = EmailField(widget=EmailInput(attrs={
+    username = EmailField(widget=EmailInput(attrs={
         'class': 'form-control',
         'placeholder': 'Email',
     }))

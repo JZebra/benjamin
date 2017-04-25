@@ -18,6 +18,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.edit import CreateView
+from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
+
 
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
@@ -25,7 +28,7 @@ from rest_framework.authtoken import views
 
 from benjamin.checklist.views import VirtueSetViewSet, VirtueDetailViewSet
 from benjamin.registration.views import index
-from benjamin.registration.forms import BenjaminUserCreationForm, BenjaminUserLoginForm
+from benjamin.registration.forms import BenjaminUserCreationForm
 
 # Create a router and register viewsets
 router = DefaultRouter()
@@ -47,7 +50,8 @@ urlpatterns = [
         form_class=BenjaminUserCreationForm,
         success_url='/'
     ), name='register'),
-    url(r'^login/', auth_views.login, {'authentication_form': BenjaminUserLoginForm}, name='app_login'),
+    url(r'^app/$', login_required(TemplateView.as_view(template_name='app.html'))),
+    url(r'^login/', auth_views.login, name='app_login'),
     url(r'^logout/', auth_views.logout, {'next_page': '/'}, name='app_logout'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     # Provides the following patterns
