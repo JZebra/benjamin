@@ -98,13 +98,19 @@ REST_FRAMEWORK = {
     # ]
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'PAGE_SIZE': 10,
 }
 
+# localhost:3000 added to enable using react dev server
+
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000'
+    'localhost:3000',
+    'localhost:8000',
 )
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Database
