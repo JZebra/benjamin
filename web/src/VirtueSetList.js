@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
-import VirtueSet from './VirtueSet'
+import {observer} from 'mobx-react';
+
+import VirtueSet from './VirtueSet';
 
 // props: items
 
-class VirtueSetList extends Component {
-
-    renderItems(){
-        let VirtueSets = []
-        for (let item in this.props.items) {
-            VirtueSets.push(VirtueSet(item).render())
-        }
-        return VirtueSets
-    }
-
-
+@observer
+export default class VirtueSetList extends Component {
     render() {
+        const virtueSets = this.props.virtueSets;
+        const style = {
+          'listStyle': 'none',
+          'backgroundColor': 'lightgreen',
+          'margin': '0 25% 0 25%'
+        };
+
         return (
-        <ul className="VirtueSetList">
-            {this.renderItems()}
-        </ul>
+            <div className="VirtueSetList container-fluid" style={style}>
+                {virtueSets.map((virtueSet) => {
+                    return <VirtueSet id={virtueSet.id} viewStore={this.props.viewStore} virtueSet={virtueSet} />
+                })}
+            </div>
         );
     }
 }
-
-export default VirtueSetList;
