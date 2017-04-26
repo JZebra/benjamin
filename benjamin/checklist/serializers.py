@@ -13,15 +13,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'username', 'email', 'is_staff')
 
 
-class VirtueSetSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    user_id = serializers.IntegerField(read_only=True)
-    title = serializers.CharField(required=True)
-
-    def create(self, validated_data):
-        return VirtueSet.objects.create(**validated_data)
-
-
 class VirtueSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     user_id = serializers.IntegerField(required=True)
@@ -48,6 +39,16 @@ class VirtueSerializer(serializers.Serializer):
         instance.personal_quote = validated_data.get('personal_quote', instance.personal_quote)
         instance.save()
         return instance
+
+
+class VirtueSetSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    user_id = serializers.IntegerField(read_only=True)
+    title = serializers.CharField(required=True)
+    virtues = VirtueSerializer(many=True)
+
+    def create(self, validated_data):
+        return VirtueSet.objects.create(**validated_data)
 
 
 class VirtueEntrySerializer(serializers.Serializer):
