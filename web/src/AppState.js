@@ -1,25 +1,9 @@
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 
 export default class AppState {
-    loggedIn = observable(false);
-    virtueSets = observable([]);
-    token = observable('');
+    @observable virtueSets = [];
 
-    login() {
-        this.loggedIn = true;
-    }
-
-    logout() {
-        this.loggedIn = false;
-        this.token = '';
-    }
-
-    storeToken(token) {
-        this.token = token;
-    }
-
-    storeVirtueSets(virtueSets) {
+    @action storeVirtueSets(virtueSets) {
         this.virtueSets = virtueSets;
     }
 }
-
