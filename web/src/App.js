@@ -1,44 +1,39 @@
 import React, { Component } from 'react';
-import './App.css';
-import Button from './Button';
-import VirtueSetList from './VirtueSetList';
+import { observer } from 'mobx-react'
 
-class App extends Component {
+import './App.css';
+import VirtueSetList from './VirtueSetList';
+import { _fetch } from './utils';
+
+@observer
+export default class App extends Component {
   getVirtueSets() {
-    fetch('http://:8000/api/virtue_sets/', {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Token ' + this.props.store.token,
-        'Accept': 'application/json'
-      }
-    }).then((res) => {
-      // TODO make list from items in json, pass it into VirtueSetList
-      // return res.json();
-      console.log(res.json())
-      return this.renderVirtueSetList(res.json());
+    _fetch('api/virtue_sets/').then((res) => {
+      return res.json();
+    }).then((json) => {
+      return json['results'];
+    }).then((virtueSets) => {
+      this.props.store.storeVirtueSets(virtueSets);
     });
   }
 
-  renderVirtueSetList(json) {
-    return (
-      <VirtueSetList items={json.results} />
-    );
+  componentDidMount() {
+    this.getVirtueSets();
   }
 
-
   render() {
+    const viewStore = this.props.viewStore;
+    const virtueSets = this.props.store.virtueSets;
+
+
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>Welcome to Benjamin</h2>
-        </div>
-        <p className="App-intro">
-          Hello world!
-        </p>
-        <Button onClick={this.getVirtueSets.bind(this)} value="click here"/>
+        <VirtueSetList
+          virtueSets={virtueSets}
+          viewStore={viewStore}
+        />
       </div>
     );
   }
 }
 
-export default App;
