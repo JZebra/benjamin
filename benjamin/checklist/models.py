@@ -26,7 +26,25 @@ class Virtue(models.Model):
         return "<Virtue id: {0}".format(self.id)
 
 
+class VirtueEntryManager(models.Manager):
+
+    def on_same_day(self, user_id, virtue_id, date):
+        try:
+            same_day_entry = VirtueEntry.objects.get(
+                user_id=user_id,
+                virtue_id=virtue_id,
+                date__day=date.day,
+                date__month=date.month,
+                date__year=date.year,
+            )
+        except VirtueEntry.DoesNotExist:
+            same_day_entry = None
+
+        return same_day_entry
+
+
 class VirtueEntry(models.Model):
+    objects = VirtueEntryManager()
     user = models.ForeignKey(User, related_name='virtue_entries', on_delete=models.CASCADE)
     virtue = models.ForeignKey(Virtue, related_name='virtue_entries', on_delete=models.CASCADE)
     date = models.DateTimeField()
