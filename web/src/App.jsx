@@ -3,23 +3,15 @@ import { observer } from 'mobx-react'
 import DevTools from 'mobx-react-devtools'
 
 import ChainViewContainer from './ChainViewContainer';
+import Navbar from './Navbar';
 import VirtueSetList from './VirtueSetList';
 import { _fetch } from './utils';
 
 @observer
 export default class App extends Component {
-  getVirtueSets() {
-    _fetch('api/virtue_sets/').then((res) => {
-      return res.json();
-    }).then((json) => {
-      return json['results'];
-    }).then((virtueSets) => {
-      this.props.appStore.storeVirtueSets(virtueSets);
-    });
-  }
 
   componentDidMount() {
-    this.getVirtueSets();
+    this.props.appStore.loadVirtueSets();
   }
 
   renderChainView() {
@@ -41,14 +33,26 @@ export default class App extends Component {
     )
   }
 
+  renderNavBar() {
+    const viewStore = this.props.viewStore;
+
+    return (
+      <Navbar
+        viewStore={ viewStore }
+      />
+    )
+  }
+
   renderVirtueSetList() {
+    const appStore = this.props.appStore;
     const viewStore = this.props.viewStore;
     const virtueSets = this.props.appStore.virtueSets;
 
     return (
         <VirtueSetList
-          virtueSets={virtueSets}
-          viewStore={viewStore}
+          appStore={ appStore }
+          virtueSets={ virtueSets }
+          viewStore={ viewStore }
         />
       )
   }
@@ -63,6 +67,7 @@ export default class App extends Component {
   render() {
       return (
         <div>
+        { this.renderNavBar() }
         {this.props.viewStore.currentView.chainView &&
           this.renderChainView()
         }
