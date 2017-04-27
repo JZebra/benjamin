@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react'
 
-import './App.css';
+import ChainViewContainer from './ChainViewContainer';
 import VirtueSetList from './VirtueSetList';
 import { _fetch } from './utils';
 
@@ -13,7 +13,7 @@ export default class App extends Component {
     }).then((json) => {
       return json['results'];
     }).then((virtueSets) => {
-      this.props.store.storeVirtueSets(virtueSets);
+      this.props.appStore.storeVirtueSets(virtueSets);
     });
   }
 
@@ -21,19 +21,50 @@ export default class App extends Component {
     this.getVirtueSets();
   }
 
-  render() {
+  renderChainView() {
     const viewStore = this.props.viewStore;
-    const virtueSets = this.props.store.virtueSets;
-
+    const appStore = this.props.appStore;
 
     return (
-      <div className="App">
+      <ChainViewContainer
+        appStore={ appStore }
+        viewStore={ viewStore }
+      />
+    )
+  }
+
+  renderDayView() {
+    return (
+      <div />
+      //<DayViewContainer />
+    )
+  }
+
+  renderVirtueSetList() {
+    const viewStore = this.props.viewStore;
+    const virtueSets = this.props.appStore.virtueSets;
+
+    return (
         <VirtueSetList
           virtueSets={virtueSets}
           viewStore={viewStore}
         />
-      </div>
-    );
+      )
+  }
+
+  render() {
+    if (this.props.viewStore.currentView.chainView) {
+      return (
+        <div>
+          { this.renderChainView() }
+        </div>
+      )
+    } else if (this.props.viewStore.currentView.dayView) {
+      return (
+        <div>
+          { this.renderVirtueSetList() }
+        </div>
+      );
+    }
   }
 }
-
