@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FaBars } from 'react-icons/lib/fa';
 
 export default class Navbar extends Component {
 
@@ -16,7 +17,7 @@ export default class Navbar extends Component {
         <a href="#" className="navbar-brand">Benjamin</a>
         <div className="dropdown">
           <div className="dropdown-toggle" data-toggle="dropdown">
-            Burger here
+            <FaBars />
           </div>
           <ul className="dropdown-menu">
             <li onClick={ this.handleDayViewClick.bind(this) }>Dayview</li>
