@@ -1,6 +1,11 @@
 import { observable, action } from 'mobx';
 
 export default class ViewState {
+    @observable currentView = {
+        chainView: true,
+        dayView: false
+    }
+
     @observable expandedVirtueSets = [];
     @observable expandedVirtues = [];
 
