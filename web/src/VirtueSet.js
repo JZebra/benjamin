@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
 import Virtue from './Virtue';
-import './VirtueSet.css';
 
 
 // props: title
@@ -31,8 +30,8 @@ export default class VirtueSet extends Component {
 
   render() {
     return (
-      <div className='VirtueSet' onClick={this.handleClick.bind(this)}>
-        <h1>{this.props.virtueSet.title}</h1>
+      <div className='VirtueSet'>
+        <h1 onClick={this.handleClick.bind(this)}>{this.props.virtueSet.title}</h1>
         <div className="VirtueSet-list row">
           { this.renderVirtues() }
         </div>
