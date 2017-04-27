@@ -11,26 +11,29 @@
 	"folders":
 	[
 		{
-			"path": "."
+			"path": "/Users/johnshen/src/benjamin"
 		}
 	],
 	"settings":
 	{
 		"anaconda_linter_mark_style": "none",
-		"python_interpreter": "~/.virtualenvs/benjamin/bin/python",
+		"anaconda_linter_phantoms": true,
 		"complete_all_parameters": true,
 		"enable_signatures_tooltip": true,
+		"ensure_newline_at_eof_on_save": true,
+		"folder_exclude_patterns": ["node_modules", "build", ".svn", ".git", ".hg", "CVS"],
 		"merge_signatures_and_doc": true,
-		"anaconda_linter_phantoms": true,
-		"validate_imports": true,
 		"pep8_ignore":
 		[
 			"E501"
 		],
+		"python_interpreter": "~/.virtualenvs/benjamin/bin/python",
 		"save_on_focus_lost": true,
-		"ensure_newline_at_eof_on_save": true,
 		"show_full_path": true,
+		"tab_size": 4,
+		"translate_tabs_to_spaces": true,
+		"trim_automatic_white_space": true,
 		"trim_trailing_white_space_on_save": true,
-		"trim_automatic_white_space": true
+		"validate_imports": true
 	}
 }

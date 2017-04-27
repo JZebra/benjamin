@@ -20,11 +20,16 @@ export default class VirtueSet extends Component {
   }
 
   renderVirtues() {
+    const appStore = this.props.appStore;
+    const viewStore = this.props.viewStore;
+
     if (this.props.viewStore.expandedVirtueSets.includes(this.props.id)) {
-      const virtues = this.props.virtueSet.virtues.map((virtue) => {
-        return <Virtue virtue={ virtue } />
+      return this.props.virtueSet.virtues.map((virtue) => {
+        return <Virtue
+          appStore={ appStore }
+          viewStore={ viewStore }
+          virtue={ virtue } />
       });
-      return virtues;
     }
   }
 
@@ -32,6 +37,7 @@ export default class VirtueSet extends Component {
     return (
       <div className='VirtueSet'>
         <h1 onClick={this.handleClick.bind(this)}>{this.props.virtueSet.title}</h1>
+        <h2>{ this.props.appStore.selectedDay.format("LL") }</h2>
         <div className="VirtueSet-list row">
           { this.renderVirtues() }
         </div>

@@ -14,11 +14,17 @@ export default class VirtueSetList extends Component {
           'backgroundColor': 'lightgreen',
           'margin': '0 25% 0 25%'
         };
+        const viewStore = this.props.viewStore;
+        const appStore = this.props.appStore;
 
         return (
             <div className="VirtueSetList container-fluid" style={style}>
-                {virtueSets.map((virtueSet) => {
-                    return <VirtueSet id={virtueSet.id} viewStore={this.props.viewStore} virtueSet={virtueSet} />
+                {virtueSets.map(virtueSet => {
+                    return <VirtueSet
+                        id={ virtueSet.id }
+                        viewStore={ viewStore }
+                        appStore ={ appStore }
+                        virtueSet={ virtueSet } />
                 })}
             </div>
         );

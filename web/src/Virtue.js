@@ -16,24 +16,17 @@ export default class Virtue extends Component {
   }
 
   handleClick(value) {
-    let payload = {
-      value: value,
-      virtue_id: this.props.virtue.id,
-    }
+    const date = this.props.appStore.selectedDay.unix();
+    const virtue_id = this.props.virtue.id;
 
-    _fetch('api/virtue_entries/', 'POST', payload)
-    .then(res => {
-      return res.json()
-    }).then(json => {
-      console.log(json)
-    })
+    this.props.appStore.recordVirtueEntry(date, value, virtue_id);
   }
 
   render() {
     const virtue = this.props.virtue;
 
     return (
-      <div className="Virtue col-6" onClick={ this.handleClick.bind(this) }>
+      <div className="Virtue col-6">
         <h1 className="Virtue-title">{ virtue.title }</h1>
         <p className="Virtue-quote">{ virtue.quote }</p>
         <button className="btn btn-success" onClick={ this.handleSuccess.bind(this) }>Yes</button>

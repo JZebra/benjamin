@@ -20,6 +20,7 @@ export function _fetch(url, method='GET', payload=null) {
         accept: 'application/json'
     };
 
+
     if (payload) {
         options['body'] = JSON.stringify(payload);
     }

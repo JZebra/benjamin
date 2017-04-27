@@ -75,14 +75,15 @@ class VirtueEntryViewSet(viewsets.ModelViewSet):
         TODO: refactor logic out of view and into model/serializer
         """
         request.data['user_id'] = self.request.user.id
-        request.data['date'] = self.request.data.get('date', timezone.now())
+        tz = pytz_timezone("America/Los_Angeles")
+        request.data['date'] = datetime.fromtimestamp(int(self.request.data['date']), tz)
+
         serializer = self.serializer_class(data=request.data)
 
         same_day_instance = VirtueEntry.objects.on_same_day(
             request.data['user_id'], request.data['virtue_id'], request.data['date'])
         if same_day_instance:
             # Update existing VirtueEntry instead of saving a new one
-            same_day_instance.value = request.data['value']
             serializer.instance = same_day_instance
 
         if serializer.is_valid():

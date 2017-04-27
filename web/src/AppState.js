@@ -6,6 +6,7 @@ export default class AppState {
     @observable virtueSets = [];
     @observable virtueEntries = [];
     @observable isLoading = true;
+    @observable selectedDay = '';
 
     constructor(transportLayer) {
         this.transportLayer = transportLayer;
@@ -15,6 +16,18 @@ export default class AppState {
         this.isLoading = true;
         this.transportLayer.fetchVirtueEntries(start, end).then(fetchedVirtueEntries => {
             this.virtueEntries = fetchedVirtueEntries;
+        });
+    }
+
+    loadVirtueSets() {
+        this.transportLayer.fetchVirtueSets().then(fetchedVirtueSets => {
+            this.virtueSets = fetchedVirtueSets;
+        })
+    }
+
+    recordVirtueEntry(date, value, virtue_id) {
+        this.transportLayer.postVirtueEntry(date, value, virtue_id).then(recordedVirtueEntry => {
+            // this.virtueEntries[]
         });
     }
 
@@ -31,7 +44,7 @@ export default class AppState {
         return dateMap;
     }
 
-    @action storeVirtueSets(virtueSets) {
-        this.virtueSets = virtueSets;
+    @action selectDay(day) {
+        this.selectedDay = day;
     }
 }
