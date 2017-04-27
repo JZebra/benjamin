@@ -31,11 +31,13 @@ export default class ChainViewContainer extends Component {
             return <ChainView
                 day={day}
                 virtueEntryDateMap={virtueEntryDateMap}
+                appStore={this.props.appStore}
+                viewStore={this.props.viewStore}
             />
         });
 
         return (
-            <div>
+            <div className="container-fluid">
                 {chainViews}
             </div>
         )

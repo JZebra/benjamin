@@ -26,4 +26,18 @@ export default class ViewState {
         this.expandedVirtues =
         this.expandedVirtues.filter(id => id !== virtueId);
     }
+
+    @action expandDay() {
+        this.currentView = {
+            chainView: false,
+            dayView: true
+        }
+    }
+
+    @action collapseDay() {
+        this.currentView = {
+            chainView: true,
+            dayView: false
+        }
+    }
 }
