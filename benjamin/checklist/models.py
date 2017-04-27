@@ -8,7 +8,7 @@ class VirtueSet(models.Model):
     title = models.TextField()
 
     def __str__(self):
-        return "<VirtueSet belonging to user {0}".format(self.user.id)
+        return "<VirtueSet belonging to user {0}>".format(self.user.id)
 
 
 class Virtue(models.Model):
@@ -23,7 +23,7 @@ class Virtue(models.Model):
     personal_quote = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return "<Virtue id: {0}".format(self.id)
+        return "<Virtue id: {0}>".format(self.id)
 
 
 class VirtueEntryManager(models.Manager):
@@ -51,4 +51,12 @@ class VirtueEntry(models.Model):
     value = models.IntegerField()
 
     def __str__(self):
-        return "<VirtueEntry id: {0}".format(self.id)
+        return "<VirtueEntry id: {0}>".format(self.id)
+
+
+class VirtueStar(models.Model):
+    virtue = models.ForeignKey(Virtue, related_name='starred_days', on_delete=models.CASCADE)
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return "<VirtueStar id: {0} for virtue: {1} on date: {2}.>".format(self.id, self.virtue.id, self.date)
