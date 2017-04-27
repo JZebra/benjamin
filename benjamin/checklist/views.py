@@ -1,12 +1,11 @@
 from datetime import datetime
-from django.utils import timezone
 from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
 from pytz import timezone as pytz_timezone
 
-from benjamin.checklist.models import Virtue, VirtueSet, VirtueEntry
+from benjamin.checklist.models import Virtue, VirtueSet, VirtueEntry, VirtueStar
 from benjamin.checklist.permissions import IsOwner
-from benjamin.checklist.serializers import VirtueSerializer, VirtueSetSerializer, VirtueEntrySerializer
+from benjamin.checklist.serializers import VirtueSerializer, VirtueSetSerializer, VirtueEntrySerializer, VirtueStarSerializer
 
 
 class VirtueSetViewSet(viewsets.ModelViewSet):
@@ -91,3 +90,15 @@ class VirtueEntryViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class VirtueStarViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
+    serializer_class = VirtueStarSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return VirtueStar.objects.filter(user=user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

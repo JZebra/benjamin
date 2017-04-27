@@ -56,6 +56,7 @@ class VirtueEntry(models.Model):
 
 class VirtueStar(models.Model):
     virtue = models.ForeignKey(Virtue, related_name='starred_days', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='starred_virtues', on_delete=models.CASCADE)
     date = models.DateTimeField()
 
     def __str__(self):

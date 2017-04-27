@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from benjamin.checklist.models import Virtue, VirtueEntry, VirtueSet
+from benjamin.checklist.models import Virtue, VirtueEntry, VirtueSet, VirtueStar
 
 
 # Serializers define the API representation
@@ -11,6 +11,37 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('url', 'username', 'email', 'is_staff')
+
+
+class VirtueEntrySerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    user_id = serializers.IntegerField(required=True)
+    virtue_id = serializers.IntegerField(required=True)
+    date = serializers.DateTimeField(required=True)
+    value = serializers.IntegerField(required=True)
+
+    def create(self, validated_data):
+        return VirtueEntry.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.value = validated_data.get('value', instance.value)
+        instance.save()
+        return instance
+
+
+class VirtueStarSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    user_id = serializers.IntegerField(required=True)
+    virtue_id = serializers.IntegerField(read_only=True)
+    date = serializers.DateTimeField(required=True)
+
+    def create(self, validated_data):
+        return VirtueStar.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.virtue_id = validated_data.get('virtue_id', instance.virtue_id)
+        instance.save()
+        return instance
 
 
 class VirtueSerializer(serializers.Serializer):
@@ -24,6 +55,7 @@ class VirtueSerializer(serializers.Serializer):
     personal_description = serializers.CharField(required=False)
     quote = serializers.CharField(required=False)
     personal_quote = serializers.CharField(required=False)
+    starred_days = VirtueStarSerializer(many=True)
 
     def create(self, validated_data):
         return Virtue.objects.create(**validated_data)
@@ -49,19 +81,3 @@ class VirtueSetSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return VirtueSet.objects.create(**validated_data)
-
-
-class VirtueEntrySerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    user_id = serializers.IntegerField(required=True)
-    virtue_id = serializers.IntegerField(required=True)
-    date = serializers.DateTimeField(required=True)
-    value = serializers.IntegerField(required=True)
-
-    def create(self, validated_data):
-        return VirtueEntry.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.value = validated_data.get('value', instance.value)
-        instance.save()
-        return instance
