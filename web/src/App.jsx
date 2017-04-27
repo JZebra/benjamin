@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react'
+import DevTools from 'mobx-react-devtools'
 
 import ChainViewContainer from './ChainViewContainer';
 import VirtueSetList from './VirtueSetList';
@@ -52,19 +53,24 @@ export default class App extends Component {
       )
   }
 
+  renderDevTools() {
+    // TODO: conditionally render this in dev environments
+    return (
+      <DevTools />
+    )
+  }
+
   render() {
-    if (this.props.viewStore.currentView.chainView) {
       return (
         <div>
-          { this.renderChainView() }
-        </div>
-      )
-    } else if (this.props.viewStore.currentView.dayView) {
-      return (
-        <div>
-          { this.renderVirtueSetList() }
+        {this.props.viewStore.currentView.chainView &&
+          this.renderChainView()
+        }
+        {this.props.viewStore.currentView.dayView &&
+          this.renderVirtueSetList()
+        }
+        { this.renderDevTools() }
         </div>
       );
     }
   }
-}
