@@ -55,7 +55,6 @@ class VirtueSerializer(serializers.Serializer):
     personal_description = serializers.CharField(required=False)
     quote = serializers.CharField(required=False)
     personal_quote = serializers.CharField(required=False)
-    starred_days = VirtueStarSerializer(many=True)
 
     def create(self, validated_data):
         return Virtue.objects.create(**validated_data)
@@ -78,6 +77,7 @@ class VirtueSetSerializer(serializers.Serializer):
     user_id = serializers.IntegerField(read_only=True)
     title = serializers.CharField(required=True)
     virtues = VirtueSerializer(many=True)
+    virtue_stars = VirtueStarSerializer(many=True)
 
     def create(self, validated_data):
         return VirtueSet.objects.create(**validated_data)
