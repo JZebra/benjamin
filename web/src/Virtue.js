@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import { moment } from 'moment-timezone';
 
-import { _fetch } from './utils';
+import VirtueStar from './VirtueStar';
 
 @observer
 export default class Virtue extends Component {
@@ -22,6 +23,16 @@ export default class Virtue extends Component {
     this.props.appStore.recordVirtueEntry(date, value, virtue_id);
   }
 
+  renderStar() {
+    return (
+      <VirtueStar
+        appStore={ this.props.appStore }
+        starred_days={ this.props.virtue.starred_days }
+        virtue_id={ this.props.virtue.id }
+      />
+    )
+  }
+
   render() {
     const virtue = this.props.virtue;
 
@@ -31,6 +42,7 @@ export default class Virtue extends Component {
         <p className="Virtue-quote">{ virtue.quote }</p>
         <button className="btn btn-success" onClick={ this.handleSuccess.bind(this) }>Yes</button>
         <button className="btn btn-danger" onClick={ this.handleFail.bind(this) }>No</button>
+        { this.renderStar() }
       </div>
     );
   }

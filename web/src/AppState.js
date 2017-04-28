@@ -27,9 +27,23 @@ export default class AppState {
 
     recordVirtueEntry(date, value, virtue_id) {
         this.transportLayer.postVirtueEntry(date, value, virtue_id).then(recordedVirtueEntry => {
-            // this.virtueEntries[]
+            // store this
         });
     }
+
+    recordVirtueStar(date, virtue_id) {
+        const initialVirtueId = virtue_id
+        this.transportLayer.postVirtueStar(date, virtue_id).then(recordedVirtueStar => {
+            const finalVirtueId = recordedVirtueStar.virtue_id
+            this.replaceVirtueStar(initialVirtueId, finalVirtueId, recordedVirtueStar)
+        });
+    }
+
+    @action replaceVirtueStar(initialVirtueId, finalVirtueId, virtueStar) {
+        // TODO: Deletes a entry from starred_days and adds an entry to another virtue
+    }
+
+
 
     @computed get VirtueEntryDateMap() {
         let dateMap = {};

@@ -27,4 +27,15 @@ export default class AppTransportLayer {
 
         return _fetch(url, 'POST', payload).then(res => res.json()).then(json => json);
     }
+
+    postVirtueStar(date, virtue_id) {
+        const url = 'api/virtue_stars/';
+
+        let payload = {
+            date: date,
+            virtue_id: virtue_id
+        };
+
+        return _fetch(url, 'POST', payload).then(res => res.json().then(json => json));
+    }
 }
