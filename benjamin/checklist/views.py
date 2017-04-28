@@ -79,11 +79,11 @@ class VirtueEntryViewSet(viewsets.ModelViewSet):
 
         serializer = self.serializer_class(data=request.data)
 
-        same_day_instance = VirtueEntry.objects.on_same_day(
+        same_day_entry = VirtueEntry.objects.on_same_day(
             request.data['user_id'], request.data['virtue_id'], request.data['date'])
-        if same_day_instance:
+        if same_day_entry:
             # Update existing VirtueEntry instead of saving a new one
-            serializer.instance = same_day_instance
+            serializer.instance = same_day_entry
 
         if serializer.is_valid():
             serializer.save()
@@ -100,5 +100,23 @@ class VirtueStarViewSet(viewsets.ModelViewSet):
         user = self.request.user
         return VirtueStar.objects.filter(user=user)
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def create(self, request, *args, **kwargs):
+
+        request.data['user_id'] = self.request.user.id
+        tz = pytz_timezone("America/Los_Angeles")
+        request.data['date'] = datetime.fromtimestamp(int(self.request.data['date']), tz)
+
+        serializer = self.serializer_class(data=request.data)
+
+        same_day_star = VirtueStar.objects.on_same_day(
+            request.data['user_id'], request.data['date']
+        )
+
+        if same_day_star:
+            serializer.instance = same_day_star
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

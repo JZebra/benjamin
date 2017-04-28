@@ -54,7 +54,24 @@ class VirtueEntry(models.Model):
         return "<VirtueEntry id: {0}>".format(self.id)
 
 
+class VirtueStarManager(models.Manager):
+
+    def on_same_day(self, user_id, date):
+        try:
+            same_day_star = VirtueStar.objects.get(
+                user_id=user_id,
+                date__day=date.day,
+                date__month=date.month,
+                date__year=date.year
+            )
+        except VirtueStar.DoesNotExist:
+            same_day_star = None
+
+        return same_day_star
+
+
 class VirtueStar(models.Model):
+    objects = VirtueStarManager()
     virtue = models.ForeignKey(Virtue, related_name='starred_days', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='starred_virtues', on_delete=models.CASCADE)
     date = models.DateTimeField()

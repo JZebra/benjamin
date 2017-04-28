@@ -32,7 +32,7 @@ class VirtueEntrySerializer(serializers.Serializer):
 class VirtueStarSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     user_id = serializers.IntegerField(required=True)
-    virtue_id = serializers.IntegerField(read_only=True)
+    virtue_id = serializers.IntegerField(required=True)
     date = serializers.DateTimeField(required=True)
 
     def create(self, validated_data):
