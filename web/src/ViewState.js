@@ -3,7 +3,7 @@ import { observable, action } from 'mobx';
 export default class ViewState {
     @observable currentView = {
         chainView: true,
-        dayView: false
+        dayView: false,
     }
 
     @observable expandedVirtueSets = [];
@@ -30,14 +30,14 @@ export default class ViewState {
     @action expandDay() {
         this.currentView = {
             chainView: false,
-            dayView: true
+            dayView: true,
         }
     }
 
     @action collapseDay() {
         this.currentView = {
             chainView: true,
-            dayView: false
+            dayView: false,
         }
     }
 }

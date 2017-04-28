@@ -16,13 +16,6 @@ export default class ChainViewContainer extends Component {
         return days;
     }
 
-    componentDidMount() {
-        const start = _format(moment().startOf('day').subtract(10, 'days'));
-        const end = _format(moment().startOf('day'));
-
-        this.props.appStore.loadVirtueEntries(start, end);
-    }
-
     render() {
         const displayDays = this.getDisplayableDays();
         const virtueEntryDateMap = this.props.appStore.VirtueEntryDateMap;

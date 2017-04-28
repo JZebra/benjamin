@@ -12,16 +12,19 @@ export default class AppState {
     }
 
     loadVirtueEntries(start, end) {
-        this.isLoading = true;
+        this.isLoading = true
         this.transportLayer.fetchVirtueEntries(start, end).then(fetchedVirtueEntries => {
             this.virtueEntries = fetchedVirtueEntries;
+            this.isLoading = false;
         });
     }
 
     loadVirtueSets() {
+        this.isLoading = true;
         this.transportLayer.fetchVirtueSets().then(fetchedVirtueSets => {
             this.virtueSets = fetchedVirtueSets;
-        })
+            this.isLoading = false;;
+        });
     }
 
     recordVirtueEntry(date, value, virtue_id) {
