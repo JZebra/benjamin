@@ -17,7 +17,7 @@ class VirtueEntrySerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     user_id = serializers.IntegerField(required=True)
     virtue_id = serializers.IntegerField(required=True)
-    date = serializers.DateTimeField(required=True)
+    date = serializers.DateField(required=True)
     value = serializers.IntegerField(required=True)
 
     def create(self, validated_data):
@@ -33,7 +33,7 @@ class VirtueStarSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     user_id = serializers.IntegerField(required=True)
     virtue_id = serializers.IntegerField(required=True)
-    date = serializers.DateTimeField(required=True)
+    date = serializers.DateField(required=True)
 
     def create(self, validated_data):
         return VirtueStar.objects.create(**validated_data)

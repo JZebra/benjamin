@@ -7,6 +7,9 @@ class VirtueSet(models.Model):
     user = models.ForeignKey(User, related_name='virtue_sets', on_delete=models.CASCADE)
     title = models.TextField()
 
+    def virtue_stars(self):
+        return VirtueStar.objects.filter(virtue__virtue_set_id=self.id)
+
     def __str__(self):
         return "<VirtueSet belonging to user {0}>".format(self.user.id)
 
@@ -33,9 +36,7 @@ class VirtueEntryManager(models.Manager):
             same_day_entry = VirtueEntry.objects.get(
                 user_id=user_id,
                 virtue_id=virtue_id,
-                date__day=date.day,
-                date__month=date.month,
-                date__year=date.year,
+                date=date,
             )
         except VirtueEntry.DoesNotExist:
             same_day_entry = None
@@ -47,7 +48,7 @@ class VirtueEntry(models.Model):
     objects = VirtueEntryManager()
     user = models.ForeignKey(User, related_name='virtue_entries', on_delete=models.CASCADE)
     virtue = models.ForeignKey(Virtue, related_name='virtue_entries', on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateField()
     value = models.IntegerField()
 
     def __str__(self):
@@ -60,9 +61,7 @@ class VirtueStarManager(models.Manager):
         try:
             same_day_star = VirtueStar.objects.get(
                 user_id=user_id,
-                date__day=date.day,
-                date__month=date.month,
-                date__year=date.year
+                date=date,
             )
         except VirtueStar.DoesNotExist:
             same_day_star = None
@@ -74,7 +73,7 @@ class VirtueStar(models.Model):
     objects = VirtueStarManager()
     virtue = models.ForeignKey(Virtue, related_name='starred_days', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='starred_virtues', on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateField()
 
     def __str__(self):
         return "<VirtueStar id: {0} for virtue: {1} on date: {2}.>".format(self.id, self.virtue.id, self.date)

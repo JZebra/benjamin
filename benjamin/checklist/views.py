@@ -1,8 +1,8 @@
 from datetime import datetime
 from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
-from pytz import timezone as pytz_timezone
 
+from benjamin.checklist.constants import DATE_FORMAT
 from benjamin.checklist.models import Virtue, VirtueSet, VirtueEntry, VirtueStar
 from benjamin.checklist.permissions import IsOwner
 from benjamin.checklist.serializers import VirtueSerializer, VirtueSetSerializer, VirtueEntrySerializer, VirtueStarSerializer
@@ -53,18 +53,17 @@ class VirtueEntryViewSet(viewsets.ModelViewSet):
         queryset = VirtueEntry.objects.filter(user=user)
 
         date = self.request.query_params.get('date', None)
-        start_date_unix = self.request.query_params.get('startDate', None)
-        end_date_unix = self.request.query_params.get('endDate', None)
+        start_date_str = self.request.query_params.get('startDate', None)
+        end_date_str = self.request.query_params.get('endDate', None)
 
-        if start_date_unix and end_date_unix:
+        if start_date_str and end_date_str:
+            start_date = datetime.strptime(start_date_str, DATE_FORMAT)
+            end_date = datetime.strptime(end_date_str, DATE_FORMAT)
             # TODO: get the timezone from the user
-            tz = pytz_timezone("America/Los_Angeles")
-            start_date = datetime.fromtimestamp(int(start_date_unix), tz)
-            end_date = datetime.fromtimestamp(int(end_date_unix), tz)
+            # tz = pytz_timezone("America/Los_Angeles")
             queryset = queryset.filter(date__gte=start_date, date__lte=end_date)
-
         elif date is not None:
-            queryset = queryset.filter(date)
+            queryset = queryset.filter(date=date)
 
         return queryset
 
@@ -74,9 +73,7 @@ class VirtueEntryViewSet(viewsets.ModelViewSet):
         TODO: refactor logic out of view and into model/serializer
         """
         request.data['user_id'] = self.request.user.id
-        tz = pytz_timezone("America/Los_Angeles")
-        request.data['date'] = datetime.fromtimestamp(int(self.request.data['date']), tz)
-
+        # tz = pytz_timezone("America/Los_Angeles")
         serializer = self.serializer_class(data=request.data)
 
         same_day_entry = VirtueEntry.objects.on_same_day(
@@ -101,11 +98,8 @@ class VirtueStarViewSet(viewsets.ModelViewSet):
         return VirtueStar.objects.filter(user=user)
 
     def create(self, request, *args, **kwargs):
-
-        request.data['user_id'] = self.request.user.id
-        tz = pytz_timezone("America/Los_Angeles")
-        request.data['date'] = datetime.fromtimestamp(int(self.request.data['date']), tz)
-
+        request.data['user_id'] = request.user.id
+        # tz = pytz_timezone("America/Los_Angeles")
         serializer = self.serializer_class(data=request.data)
 
         same_day_star = VirtueStar.objects.on_same_day(
