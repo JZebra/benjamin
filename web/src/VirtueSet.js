@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
+import { _englishDate } from './utils';
 import Virtue from './Virtue';
 
 
@@ -37,7 +38,7 @@ export default class VirtueSet extends Component {
     return (
       <div className='VirtueSet'>
         <h1 onClick={this.handleClick.bind(this)}>{this.props.virtueSet.title}</h1>
-        <h2>{ this.props.appStore.selectedDay.format("LL") }</h2>
+        <h2>{ this.props.appStore.selectedDay }</h2>
         <div className="VirtueSet-list row">
           { this.renderVirtues() }
         </div>

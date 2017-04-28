@@ -28,3 +28,27 @@ export function _fetch(url, method='GET', payload=null) {
     return fetch(fullURL, options);
   }
 
+export function _format(momentDate) {
+    return momentDate.format('YYYY-MM-DD');
+}
+
+export function _englishDate(date) {
+    const { year, month, day } = date.split('-');
+
+    const months = {
+        '01': 'Jan',
+        '02': 'Feb',
+        '03': 'Mar',
+        '04': 'Apr',
+        '05': 'May',
+        '06': 'Jun',
+        '07': 'Jul',
+        '08': 'Aug',
+        '09': 'Sep',
+        '10': 'Oct',
+        '11': 'Nov',
+        '12': 'Dec'
+    };
+
+    return `${months[month]} ${day}, ${year}`;
+}

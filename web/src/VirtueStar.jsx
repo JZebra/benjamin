@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import moment from 'moment-timezone';
 
 import { FaStar, FaStarO } from 'react-icons/lib/fa';
 
@@ -8,14 +7,15 @@ import { FaStar, FaStarO } from 'react-icons/lib/fa';
 export default class VirtueStar extends Component {
 
   handleClick() {
-    this.props.appStore.recordVirtueStar(this.props.appStore.selectedDay.unix(), this.props.virtue_id);
+    this.props.appStore.recordVirtueStar(this.props.appStore.selectedDay, this.props.virtueId);
   }
 
   render() {
     const selectedDay = this.props.appStore.selectedDay;
     const size = 30;
-    const starred = this.props.starred_days.filter(VirtueStar => {
-      return moment(VirtueStar.date).format('LL') == selectedDay.format('LL')
+    const virtueStars = this.props.appStore.virtueSets[0].virtue_stars;
+    const starred = virtueStars.filter(VirtueStar => {
+      return VirtueStar.date === selectedDay && VirtueStar.virtue_id === this.props.virtueId
     })
 
     return (

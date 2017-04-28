@@ -10,8 +10,7 @@ export default class ChainView extends Component {
     }
 
     getStatus() {
-        const date_string = this.props.day.format("LL");
-        const virtueEntries = this.props.virtueEntryDateMap[date_string] || [];
+        const virtueEntries = this.props.virtueEntryDateMap[this.props.day] || [];
         const successes = virtueEntries.filter(virtueEntry => virtueEntry.value === 1).length;
 
         return {
@@ -64,7 +63,7 @@ export default class ChainView extends Component {
 
         return (
             <div style={ style } onClick={ this.handleClick.bind(this) } >
-                <p>{ this.props.day.format("LL") }</p>
+                <p>{ this.props.day }</p>
                 { this.renderVirtueEntryResults() }
             </div>
         )

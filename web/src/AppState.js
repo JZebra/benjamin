@@ -1,5 +1,4 @@
 import { computed, observable, action } from 'mobx';
-import moment from 'moment-timezone';
 
 export default class AppState {
     transportLayer;
@@ -32,23 +31,27 @@ export default class AppState {
     }
 
     recordVirtueStar(date, virtue_id) {
-        const initialVirtueId = virtue_id
         this.transportLayer.postVirtueStar(date, virtue_id).then(recordedVirtueStar => {
-            const finalVirtueId = recordedVirtueStar.virtue_id
-            this.replaceVirtueStar(initialVirtueId, finalVirtueId, recordedVirtueStar)
+            this.replaceVirtueStar(recordedVirtueStar);
         });
     }
 
-    @action replaceVirtueStar(initialVirtueId, finalVirtueId, virtueStar) {
-        // TODO: Deletes a entry from starred_days and adds an entry to another virtue
+    @action replaceVirtueStar(newVirtueStar) {
+        let oldVirtueStar = this.virtueSets[0].virtue_stars.find(vs => {
+            return vs.date === newVirtueStar.date
+        })
+
+        if (oldVirtueStar) {
+            oldVirtueStar.virtue_id = newVirtueStar.virtue_id
+        } else {
+            this.virtueSets[0].virtue_stars.push(newVirtueStar)
+        }
     }
-
-
 
     @computed get VirtueEntryDateMap() {
         let dateMap = {};
         this.virtueEntries.forEach(virtueEntry => {
-            const key = moment(virtueEntry.date).format('LL');
+            const key = virtueEntry.date;
             if (dateMap[key] === undefined) {
                 dateMap[key] = [virtueEntry];
             } else {
