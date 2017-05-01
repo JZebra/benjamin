@@ -47,11 +47,13 @@ export default class App extends Component {
   }
 
   renderNavBar() {
+    const appStore = this.props.appStore;
     const viewStore = this.props.viewStore;
 
     return (
       <Navbar
         viewStore={ viewStore }
+        appStore={ appStore }
       />
     )
   }

@@ -6,7 +6,9 @@ import { FaBars } from 'react-icons/lib/fa';
 export default class Navbar extends Component {
 
   handleDayViewClick(): void {
-    this.props.viewStore.expandDay()
+    this.props.appStore.selectDay(this.props.appStore.getToday());
+    this.props.viewStore.expandDay();
+    this.props.viewStore.expandVirtueSet(this.props.appStore.selectedVirtueSetId);
   }
 
   handleChainViewClick(): void {
@@ -27,13 +29,13 @@ export default class Navbar extends Component {
             <li className="nav-item">
               <button onClick={ this.handleDayViewClick.bind(this) }
                 type="button" className="nav-link btn btn-outline-success">
-                Day View
+                Today
               </button>
             </li>
             <li className="nav-item">
               <button onClick={ this.handleChainViewClick.bind(this) }
                 type="button" className="nav-link btn btn-outline-success">
-                Chain View
+                Overview
               </button>
             </li>
           </ul>

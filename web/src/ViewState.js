@@ -33,7 +33,7 @@ export default class ViewState {
         this.currentView = {
             chainView: false,
             dayView: true,
-        }
+        };
     }
 
     @action collapseDay(): void {

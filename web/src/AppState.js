@@ -1,6 +1,9 @@
 // @flow
 
 import { computed, observable, action } from 'mobx';
+import moment from 'moment';
+
+import { _format } from './utils.js';
 
 export default class AppState {
     transportLayer: Object;
@@ -95,4 +98,7 @@ export default class AppState {
         }).virtue_stars
     }
 
+    getToday() {
+        return _format(moment());
+    }
 }
