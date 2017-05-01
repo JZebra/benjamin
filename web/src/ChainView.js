@@ -25,8 +25,10 @@ export default class ChainView extends Component {
         })
         const starredVirtueTitle = starredVirtue ?
         appStore.virtues.find(v => v.id === starredVirtue.virtue_id).title : ''
+        const isToday = this.props.appStore.getToday() === this.props.day;
 
         return {
+            isToday: isToday,
             virtueCount: virtueCount,
             successes: successes,
             virtueEntriesCount: virtueEntries.length,
@@ -87,6 +89,10 @@ export default class ChainView extends Component {
             margin: '8px',
             display: 'inline-block',
             verticalAlign: 'bottom'
+        }
+
+        if (this.getStatus().isToday) {
+            style['border'] = '8px solid yellow';
         }
 
         return (
