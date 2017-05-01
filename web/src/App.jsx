@@ -27,12 +27,16 @@ export default class App extends Component {
     const viewStore = this.props.viewStore;
     const appStore = this.props.appStore;
 
-    return (
-      <ChainViewContainer
-        appStore={ appStore }
-        viewStore={ viewStore }
-      />
-    )
+    if (appStore.isLoading) {
+      return <div />
+    } else {
+      return (
+        <ChainViewContainer
+          appStore={ appStore }
+          viewStore={ viewStore }
+        />
+      )
+    }
   }
 
   renderDayView() {
