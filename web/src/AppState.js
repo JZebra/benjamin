@@ -27,13 +27,21 @@ export default class AppState {
         this.isLoading = true;
         this.transportLayer.fetchVirtueSets().then(fetchedVirtueSets => {
             this.virtueSets = fetchedVirtueSets;
-            this.isLoading = false;;
+            this.isLoading = false;
         });
     }
 
     recordVirtueEntry(date: string, value: string, virtue_id: string) {
         this.transportLayer.postVirtueEntry(date, value, virtue_id).then(recordedVirtueEntry => {
-            // TODO: store this
+            let oldVirtueEntry = this.virtueEntries.find(ve => {
+                return ve.date === date && ve.virtue_id === virtue_id;
+            });
+
+            if (oldVirtueEntry) {
+                oldVirtueEntry.value = value;
+            } else {
+                this.virtueEntries.push(recordedVirtueEntry);
+            }
         });
     }
 
@@ -43,6 +51,7 @@ export default class AppState {
         });
     }
 
+    // Actions
     @action replaceVirtueStar(newVirtueStar: Object): void {
         let oldVirtueStar = this.virtueSets[0].virtue_stars.find(vs => {
             return vs.date === newVirtueStar.date
@@ -55,7 +64,19 @@ export default class AppState {
         }
     }
 
-    @computed get VirtueEntryDateMap(): Object {
+    @action selectDay(day: string): void {
+        this.selectedDay = day;
+    }
+
+
+    // Computed
+    @computed get virtues() {
+        return this.virtueSets.find(vs => {
+            return vs.id === this.selectedVirtueSetId
+        }).virtues
+    }
+
+    @computed get virtueEntryDateMap(): Object {
         let dateMap = {};
         this.virtueEntries.forEach(virtueEntry => {
             const key = virtueEntry.date;
@@ -68,7 +89,10 @@ export default class AppState {
         return dateMap;
     }
 
-    @action selectDay(day: string): void {
-        this.selectedDay = day;
+    @computed get virtueStars() {
+        return this.virtueSets.find(vs => {
+            return vs.id === this.selectedVirtueSetId
+        }).virtue_stars
     }
+
 }
