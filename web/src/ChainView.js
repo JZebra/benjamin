@@ -1,15 +1,17 @@
+// @flow
+
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
 
 @observer
 export default class ChainView extends Component {
-    handleClick() {
+    handleClick(): void {
         this.props.viewStore.expandDay();
         this.props.appStore.selectDay(this.props.day);
     }
 
-    getStatus() {
+    getStatus(): Object {
         const virtueEntries = this.props.virtueEntryDateMap[this.props.day] || [];
         const successes = virtueEntries.filter(virtueEntry => virtueEntry.value === 1).length;
 
@@ -19,7 +21,7 @@ export default class ChainView extends Component {
         }
     }
 
-    getColor() {
+    getColor(): string {
         // const statusColors = {
         //     0: '#FF0000',
         //     1: '#CC0000',
@@ -46,13 +48,13 @@ export default class ChainView extends Component {
         // return statusColors[this.getStatus()['successes']];
     }
 
-    renderVirtueEntryResults() {
+    renderVirtueEntryResults(): Object {
         const status = this.getStatus();
         return <p>{ `${ status.successes } / ${ status.virtuesCount }` }</p>
     }
 
 
-    render() {
+    render(): React$Element<any> {
         const style = {
             backgroundColor: this.getColor(),
             width: '120px',

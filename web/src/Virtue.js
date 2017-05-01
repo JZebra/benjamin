@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
@@ -6,23 +8,23 @@ import VirtueStar from './VirtueStar';
 @observer
 export default class Virtue extends Component {
 
-  handleSuccess() {
+  handleSuccess(): void {
     // TODO: pass the value in the click handler
     this.handleClick(1)
   }
 
-  handleFail() {
+  handleFail(): void {
     this.handleClick(0)
   }
 
-  handleClick(value) {
+  handleClick(value: number): void {
     const date = this.props.appStore.selectedDay;
     const virtueId = this.props.virtue.id;
 
     this.props.appStore.recordVirtueEntry(date, value, virtueId);
   }
 
-  renderStar() {
+  renderStar(): Object {
     return (
       <VirtueStar
         appStore={ this.props.appStore }
@@ -31,7 +33,7 @@ export default class Virtue extends Component {
     )
   }
 
-  render() {
+  render(): React$Element<any> {
     const virtue = this.props.virtue;
 
     return (

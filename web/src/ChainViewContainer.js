@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import moment from 'moment';
@@ -7,7 +9,7 @@ import ChainView from './ChainView';
 
 @observer
 export default class ChainViewContainer extends Component {
-    getDisplayableDays() {
+    getDisplayableDays(): Array<string> {
         let days = [];
         for (let i = 0; i < 10; i++) {
             days.push(_format(moment().startOf('day').subtract(i, 'days')));
@@ -16,7 +18,7 @@ export default class ChainViewContainer extends Component {
         return days;
     }
 
-    render() {
+    render(): React$Element<any> {
         const displayDays = this.getDisplayableDays();
         const virtueEntryDateMap = this.props.appStore.VirtueEntryDateMap;
         const chainViews = displayDays.map(day => {

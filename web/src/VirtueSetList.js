@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import {observer} from 'mobx-react';
 
@@ -7,7 +9,7 @@ import VirtueSet from './VirtueSet';
 
 @observer
 export default class VirtueSetList extends Component {
-    render() {
+    render(): React$Element<any> {
         const virtueSets = this.props.virtueSets;
         const style = {
           'listStyle': 'none',

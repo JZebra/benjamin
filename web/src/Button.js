@@ -1,7 +1,9 @@
+// @flow
+
 import React, { Component } from 'react';
 
 class Button extends Component {
-  render() {
+  render(): React$Element<any> {
     return (
         <div
             className="Button"

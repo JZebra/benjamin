@@ -1,10 +1,17 @@
-function getCSRFTokenFromCookie() {
+/* @flow */
+
+function getCSRFTokenFromCookie(): string {
     const cookie = document.cookie;
     const re = /csrftoken=([0-9a-zA-Z]+)/;
-    return cookie.match(re)[1];
+    const matches = cookie.match(re);
+    if (matches != null && matches[1]) {
+        return matches[1];
+    } else {
+        throw 'CSRF Token not found in cookie.';
+    }
 }
 
-export function _fetch(url, method='GET', payload=null) {
+export function _fetch(url: string, method: MethodType='GET', payload?: Object) {
     // TODO Move this to env or settings file
     const baseURL = 'http://localhost:8000/'
     const fullURL = baseURL + url;
@@ -13,7 +20,7 @@ export function _fetch(url, method='GET', payload=null) {
         'Content-Type': 'application/json'
     });
 
-    let options = {
+    let options: RequestOptions = {
         method: method,
         headers: headers,
         credentials: 'include',
@@ -28,27 +35,6 @@ export function _fetch(url, method='GET', payload=null) {
     return fetch(fullURL, options);
   }
 
-export function _format(momentDate) {
+export function _format(momentDate: Object): string {
     return momentDate.format('YYYY-MM-DD');
-}
-
-export function _englishDate(date) {
-    const { year, month, day } = date.split('-');
-
-    const months = {
-        '01': 'Jan',
-        '02': 'Feb',
-        '03': 'Mar',
-        '04': 'Apr',
-        '05': 'May',
-        '06': 'Jun',
-        '07': 'Jul',
-        '08': 'Aug',
-        '09': 'Sep',
-        '10': 'Oct',
-        '11': 'Nov',
-        '12': 'Dec'
-    };
-
-    return `${months[month]} ${day}, ${year}`;
 }

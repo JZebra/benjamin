@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
@@ -7,14 +9,17 @@ import benjamin_portrait from '../public/benjamin_portrait.jpg';
 @observer
 export default class SplashScreen extends Component {
 
-    render() {
+
+    render(): React$Element<any> {
         const style = {
             "background": `url('${benjamin_portrait}') no-repeat center/10%`,
             "background-color": "green",
             "height": "100vh",
             "width": "100vw",
             "text-align": "center",
-            "transition": "opacity 2s linear"
+            "transition": "opacity 2s linear",
+            "visibility": "",
+            "opacity": ""
         };
 
         if (!this.props.isLoading) {

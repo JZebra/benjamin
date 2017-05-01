@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
@@ -6,11 +8,11 @@ import { FaStar, FaStarO } from 'react-icons/lib/fa';
 @observer
 export default class VirtueStar extends Component {
 
-  handleClick() {
+  handleClick(): void {
     this.props.appStore.recordVirtueStar(this.props.appStore.selectedDay, this.props.virtueId);
   }
 
-  render() {
+  render(): React$Element<any> {
     const selectedDay = this.props.appStore.selectedDay;
     const size = 30;
     const virtueStars = this.props.appStore.virtueSets[0].virtue_stars;

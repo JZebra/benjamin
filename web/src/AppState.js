@@ -1,17 +1,19 @@
+// @flow
+
 import { computed, observable, action } from 'mobx';
 
 export default class AppState {
-    transportLayer;
+    transportLayer: Object;
     @observable virtueSets = [];
     @observable virtueEntries = [];
     @observable isLoading = true;
     @observable selectedDay = '';
 
-    constructor(transportLayer) {
+    constructor(transportLayer: Object) {
         this.transportLayer = transportLayer;
     }
 
-    loadVirtueEntries(start, end) {
+    loadVirtueEntries(start: string, end: string): void {
         this.isLoading = true
         this.transportLayer.fetchVirtueEntries(start, end).then(fetchedVirtueEntries => {
             this.virtueEntries = fetchedVirtueEntries;
@@ -19,7 +21,7 @@ export default class AppState {
         });
     }
 
-    loadVirtueSets() {
+    loadVirtueSets(): void {
         this.isLoading = true;
         this.transportLayer.fetchVirtueSets().then(fetchedVirtueSets => {
             this.virtueSets = fetchedVirtueSets;
@@ -27,19 +29,19 @@ export default class AppState {
         });
     }
 
-    recordVirtueEntry(date, value, virtue_id) {
+    recordVirtueEntry(date: string, value: string, virtue_id: string) {
         this.transportLayer.postVirtueEntry(date, value, virtue_id).then(recordedVirtueEntry => {
-            // store this
+            // TODO: store this
         });
     }
 
-    recordVirtueStar(date, virtue_id) {
+    recordVirtueStar(date: string, virtue_id: string): void {
         this.transportLayer.postVirtueStar(date, virtue_id).then(recordedVirtueStar => {
             this.replaceVirtueStar(recordedVirtueStar);
         });
     }
 
-    @action replaceVirtueStar(newVirtueStar) {
+    @action replaceVirtueStar(newVirtueStar: Object): void {
         let oldVirtueStar = this.virtueSets[0].virtue_stars.find(vs => {
             return vs.date === newVirtueStar.date
         })
@@ -51,7 +53,7 @@ export default class AppState {
         }
     }
 
-    @computed get VirtueEntryDateMap() {
+    @computed get VirtueEntryDateMap(): Object {
         let dateMap = {};
         this.virtueEntries.forEach(virtueEntry => {
             const key = virtueEntry.date;
@@ -64,7 +66,7 @@ export default class AppState {
         return dateMap;
     }
 
-    @action selectDay(day) {
+    @action selectDay(day: string): void {
         this.selectedDay = day;
     }
 }

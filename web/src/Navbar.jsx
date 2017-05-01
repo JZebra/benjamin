@@ -1,17 +1,19 @@
+// @flow
+
 import React, { Component } from 'react';
 import { FaBars } from 'react-icons/lib/fa';
 
 export default class Navbar extends Component {
 
-  handleDayViewClick() {
+  handleDayViewClick(): void {
     this.props.viewStore.expandDay()
   }
 
-  handleChainViewClick() {
+  handleChainViewClick(): void {
     this.props.viewStore.collapseDay()
   }
 
-  render() {
+  render(): React$Element<any> {
     return (
       <nav className="navbar navbar-inverse bg-success navbar-toggleable-md">
         <button className="navbar-toggler navbar-toggler-right" type="button"
