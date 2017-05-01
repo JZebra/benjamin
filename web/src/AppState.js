@@ -4,6 +4,8 @@ import { computed, observable, action } from 'mobx';
 
 export default class AppState {
     transportLayer: Object;
+    // We currently only have the Benjamin virtue set so we never change selectedVirtueSetId
+    @observable selectedVirtueSetId = 1;
     @observable virtueSets = [];
     @observable virtueEntries = [];
     @observable isLoading = true;

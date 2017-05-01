@@ -2,12 +2,14 @@
 
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import { FaTrophy } from 'react-icons/lib/fa';
 
 
 @observer
 export default class ChainView extends Component {
     handleClick(): void {
         this.props.viewStore.expandDay();
+        this.props.viewStore.expandVirtueSet(this.props.appStore.selectedVirtueSetId);
         this.props.appStore.selectDay(this.props.day);
     }
 
@@ -53,19 +55,29 @@ export default class ChainView extends Component {
         return <p>{ `${ status.successes } / ${ status.virtuesCount }` }</p>
     }
 
+    renderTrophy() {
+        const status = this.getStatus();
+        if (status.successes >= 10) {
+            return <FaTrophy size={30} />
+        }
+    }
+
 
     render(): React$Element<any> {
         const style = {
             backgroundColor: this.getColor(),
+            height: '120px',
             width: '120px',
             padding: '12px',
             margin: '8px',
-            display: 'inline-block'
+            display: 'inline-block',
+            verticalAlign: 'bottom'
         }
 
         return (
             <div style={ style } onClick={ this.handleClick.bind(this) } >
                 <p>{ this.props.day }</p>
+                { this.renderTrophy() }
                 { this.renderVirtueEntryResults() }
             </div>
         )
