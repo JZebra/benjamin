@@ -78,15 +78,15 @@ export default class App extends Component {
 
       return (
         <div>
-            <SplashScreen isLoading={appStore.isLoading} />
-        { this.renderNavBar() }
-        { this.props.viewStore.currentView.chainView &&
-          this.renderChainView()
-        }
-        { this.props.viewStore.currentView.dayView &&
-          this.renderVirtueSetList()
-        }
-        { this.renderDevTools() }
+          <SplashScreen isLoading={appStore.isLoading} />
+          { this.renderNavBar() }
+          { this.props.viewStore.currentView.chainView &&
+            this.renderChainView()
+          }
+          { this.props.viewStore.currentView.dayView &&
+            this.renderVirtueSetList()
+          }
+          { this.renderDevTools() }
         </div>
       );
     }

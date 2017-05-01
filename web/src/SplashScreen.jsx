@@ -12,20 +12,22 @@ export default class SplashScreen extends Component {
 
     render(): React$Element<any> {
         const style = {
-            "background": `url('${benjamin_portrait}') no-repeat center/10%`,
+            "background": `url('${benjamin_portrait}') no-repeat center/20%`,
             "background-color": "green",
             "height": "100vh",
             "width": "100vw",
             "text-align": "center",
-            "transition": "opacity 2s linear",
-            "visibility": "",
-            "opacity": ""
+            "transition": "",
+            "opacity": "1",
+            "visibility": "visible",
+            "position": "fixed",
+            "zIndex": "2"
         };
 
         if (!this.props.isLoading) {
             style.visibility = 'hidden';
             style.opacity = '0';
-            style.transition = 'visibility 0s 2s, opacity 2s linear';
+            style.transition = 'visibility 0s 2s, opacity 2s ease-in';
         }
 
         return (
