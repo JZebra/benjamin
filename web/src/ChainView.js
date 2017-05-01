@@ -7,6 +7,7 @@ import { FaTrophy } from 'react-icons/lib/fa';
 
 @observer
 export default class ChainView extends Component {
+
     handleClick(): void {
         this.props.viewStore.expandDay();
         this.props.viewStore.expandVirtueSet(this.props.appStore.selectedVirtueSetId);
@@ -14,12 +15,22 @@ export default class ChainView extends Component {
     }
 
     getStatus(): Object {
+        // TODO: cache this
+        const appStore = this.props.appStore;
+        const virtueCount = appStore.virtueSets[0].virtues.length;
         const virtueEntries = this.props.virtueEntryDateMap[this.props.day] || [];
         const successes = virtueEntries.filter(virtueEntry => virtueEntry.value === 1).length;
+        const starredVirtue = appStore.virtueStars.find(vs => {
+            return vs.date === this.props.day
+        })
+        const starredVirtueTitle = starredVirtue ?
+        appStore.virtues.find(v => v.id === starredVirtue.virtue_id).title : ''
 
         return {
+            virtueCount: virtueCount,
             successes: successes,
-            virtuesCount: virtueEntries.length
+            virtueEntriesCount: virtueEntries.length,
+            starredVirtueTitle: starredVirtueTitle
         }
     }
 
@@ -41,7 +52,7 @@ export default class ChainView extends Component {
         //     13: '#00FF00'
         // }
 
-        const successRatio = this.getStatus()['successes'] / this.getStatus()['virtuesCount'] || 0
+        const successRatio = this.getStatus()['successes'] / this.getStatus()['virtueEntriesCount'] || 0
         const red = 255 - Math.floor(successRatio * 255)
         const green = Math.floor(successRatio * 255)
         const blue = 42
@@ -52,7 +63,7 @@ export default class ChainView extends Component {
 
     renderVirtueEntryResults(): Object {
         const status = this.getStatus();
-        return <p>{ `${ status.successes } / ${ status.virtuesCount }` }</p>
+        return <p>{ `${ status.successes } / ${ status['virtueCount'] }` }</p>
     }
 
     renderTrophy() {
@@ -62,12 +73,16 @@ export default class ChainView extends Component {
         }
     }
 
+    renderStarredVirtue() {
+        const status = this.getStatus();
+        return <p>{ status.starredVirtueTitle }</p>
+    }
 
     render(): React$Element<any> {
         const style = {
             backgroundColor: this.getColor(),
-            height: '120px',
-            width: '120px',
+            height: '160px',
+            width: '160px',
             padding: '12px',
             margin: '8px',
             display: 'inline-block',
@@ -77,6 +92,7 @@ export default class ChainView extends Component {
         return (
             <div style={ style } onClick={ this.handleClick.bind(this) } >
                 <p>{ this.props.day }</p>
+                { this.renderStarredVirtue() }
                 { this.renderTrophy() }
                 { this.renderVirtueEntryResults() }
             </div>

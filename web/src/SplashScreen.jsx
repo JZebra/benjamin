@@ -13,10 +13,10 @@ export default class SplashScreen extends Component {
     render(): React$Element<any> {
         const style = {
             "background": `url('${benjamin_portrait}') no-repeat center/20%`,
-            "background-color": "green",
+            "backgroundColor": "green",
             "height": "100vh",
             "width": "100vw",
-            "text-align": "center",
+            "textAlign": "center",
             "transition": "",
             "opacity": "1",
             "visibility": "visible",

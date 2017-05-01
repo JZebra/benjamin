@@ -20,7 +20,7 @@ export default class ChainViewContainer extends Component {
 
     render(): React$Element<any> {
         const displayDays = this.getDisplayableDays();
-        const virtueEntryDateMap = this.props.appStore.VirtueEntryDateMap;
+        const virtueEntryDateMap = this.props.appStore.virtueEntryDateMap;
         const chainViews = displayDays.map(day => {
             return <ChainView
                 day={day}
