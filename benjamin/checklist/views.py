@@ -68,19 +68,8 @@ class VirtueEntryViewSet(viewsets.ModelViewSet):
         return queryset
 
     def create(self, request, *args, **kwargs):
-        """Creates a new VirtueEntry if one does not exist for that day. Otherwise
-        it updates the existing VirtueEntry for that day
-        TODO: refactor logic out of view and into model/serializer
-        """
         request.data['user_id'] = self.request.user.id
-        # tz = pytz_timezone("America/Los_Angeles")
         serializer = self.serializer_class(data=request.data)
-
-        same_day_entry = VirtueEntry.objects.on_same_day(
-            request.data['user_id'], request.data['virtue_id'], request.data['date'])
-        if same_day_entry:
-            # Update existing VirtueEntry instead of saving a new one
-            serializer.instance = same_day_entry
 
         if serializer.is_valid():
             serializer.save()

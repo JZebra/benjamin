@@ -48,8 +48,22 @@ class VirtueEntry(models.Model):
     objects = VirtueEntryManager()
     user = models.ForeignKey(User, related_name='virtue_entries', on_delete=models.CASCADE)
     virtue = models.ForeignKey(Virtue, related_name='virtue_entries', on_delete=models.CASCADE)
-    date = models.DateField()
-    value = models.IntegerField()
+    date = models.DateField(null=False)
+    value = models.IntegerField(null=False)
+
+    def save(self, *args, **kwargs):
+        same_day_entry = VirtueEntryManager.on_same_day(
+            VirtueEntryManager,
+            user_id=self.user.id,
+            virtue_id=self.virtue.id,
+            date=self.date,
+        )
+
+        if same_day_entry:
+            same_day_entry.value = self.value
+            super(VirtueEntry, same_day_entry).save()
+        else:
+            super(VirtueEntry, self).save(*args, **kwargs)
 
     def __str__(self):
         return "<VirtueEntry id: {0}>".format(self.id)
