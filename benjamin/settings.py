@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third party apps
     'django_extensions',
+    'django_nose',
     'debug_toolbar',
     'rest_framework',
     'rest_framework.authtoken',
@@ -170,3 +171,6 @@ STATICFILES_DIRS = (
     # os.path.join(BASE_DIR, 'benjamin/static/'),
     os.path.join(BASE_DIR, 'web/build/static/'),
 )
+
+# Tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
