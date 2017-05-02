@@ -2,7 +2,6 @@ import random
 
 from factory import Faker, SubFactory
 from factory.django import DjangoModelFactory
-from django.test import TestCase
 
 from benjamin.checklist.models import Virtue, VirtueEntry, VirtueSet, VirtueStar
 from benjamin.registration.factories import UserFactory

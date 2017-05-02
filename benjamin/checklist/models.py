@@ -89,5 +89,18 @@ class VirtueStar(models.Model):
     user = models.ForeignKey(User, related_name='starred_virtues', on_delete=models.CASCADE)
     date = models.DateField()
 
+    def save(self, *args, **kwargs):
+        same_day_star = VirtueStarManager.on_same_day(
+            VirtueStarManager,
+            user_id=self.user.id,
+            date=self.date,
+        )
+
+        if same_day_star:
+            same_day_star.virtue_id = self.virtue_id
+            super(VirtueStar, same_day_star).save()
+        else:
+            super(VirtueStar, self).save(*args, **kwargs)
+
     def __str__(self):
         return "<VirtueStar id: {0} for virtue: {1} on date: {2}.>".format(self.id, self.virtue.id, self.date)

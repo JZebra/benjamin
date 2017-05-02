@@ -70,7 +70,6 @@ class VirtueEntryViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         request.data['user_id'] = self.request.user.id
         serializer = self.serializer_class(data=request.data)
-
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -88,16 +87,7 @@ class VirtueStarViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         request.data['user_id'] = request.user.id
-        # tz = pytz_timezone("America/Los_Angeles")
         serializer = self.serializer_class(data=request.data)
-
-        same_day_star = VirtueStar.objects.on_same_day(
-            request.data['user_id'], request.data['date']
-        )
-
-        if same_day_star:
-            serializer.instance = same_day_star
-
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
