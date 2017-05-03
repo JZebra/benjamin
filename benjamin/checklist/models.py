@@ -5,7 +5,7 @@ from benjamin.registration.models import User
 # Create your models here.
 class VirtueSet(models.Model):
     user = models.ForeignKey(User, related_name='virtue_sets', on_delete=models.CASCADE)
-    title = models.TextField()
+    title = models.TextField(null=False)
 
     def virtue_stars(self):
         return VirtueStar.objects.filter(virtue__virtue_set_id=self.id)
@@ -87,7 +87,7 @@ class VirtueStar(models.Model):
     objects = VirtueStarManager()
     virtue = models.ForeignKey(Virtue, related_name='starred_days', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='starred_virtues', on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateField(null=False)
 
     def save(self, *args, **kwargs):
         same_day_star = VirtueStarManager.on_same_day(
