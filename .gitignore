@@ -1,3 +1,4 @@
+celerybeat-schedule
 benjamin.sublime-workspace
 *.pyc
 *.DS_Store
