@@ -83,7 +83,22 @@ class VirtueStarViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return VirtueStar.objects.filter(user=user)
+        queryset = VirtueStar.objects.filter(user=user)
+
+        date = self.request.query_params.get('date', None)
+        start_date_str = self.request.query_params.get('startDate', None)
+        end_date_str = self.request.query_params.get('endDate', None)
+
+        if start_date_str and end_date_str:
+            start_date = datetime.strptime(start_date_str, DATE_FORMAT)
+            end_date = datetime.strptime(end_date_str, DATE_FORMAT)
+            # TODO: get the timezone from the user
+            # tz = pytz_timezone("America/Los_Angeles")
+            queryset = queryset.filter(date__gte=start_date, date__lte=end_date)
+        elif date is not None:
+            queryset = queryset.filter(date=date)
+
+        return queryset
 
     def create(self, request, *args, **kwargs):
         request.data['user_id'] = request.user.id
