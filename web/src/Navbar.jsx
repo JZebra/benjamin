@@ -27,13 +27,13 @@ export default class Navbar extends Component {
         <div className="collapse navbar-collapse" id="navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <button onClick={ this.handleDayViewClick.bind(this) }
+              <button id="navbar-today-button" onClick={ this.handleDayViewClick.bind(this) }
                 type="button" className="nav-link btn btn-outline-success">
                 Today
               </button>
             </li>
             <li className="nav-item">
-              <button onClick={ this.handleChainViewClick.bind(this) }
+              <button id="navbar-overview-button" onClick={ this.handleChainViewClick.bind(this) }
                 type="button" className="nav-link btn btn-outline-success">
                 Overview
               </button>

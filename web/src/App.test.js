@@ -1,8 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme';
+
 import App from './App';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+describe('<App />', () => {
+    beforeEach(function() {
+        this.appStore = { isLoading: false };
+        this.viewStore = { currentView: { chainView: true, dayView: false }};
+    });
+
+    it('renders without crashing', function() {
+        const wrapper = shallow(<App appStore={this.appStore} viewStore={this.viewStore}/>)
+    });
 });
