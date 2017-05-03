@@ -1,6 +1,6 @@
 /* @flow */
 
-function getCSRFTokenFromCookie(): string {
+export function getCSRFTokenFromCookie(): string {
     const cookie = document.cookie;
     const re = /csrftoken=([0-9a-zA-Z]+)/;
     const matches = cookie.match(re);
