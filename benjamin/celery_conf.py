@@ -13,3 +13,14 @@ app.conf.timezone = 'America/Los_Angeles'
 
 # Django will autodiscover tasks defined in a tasks.py
 app.autodiscover_tasks()
+
+app.conf.beat_schedule = {
+    'send_morning_reminder_emails': {
+        'task': 'checklist.tasks.send_morning_reminder_emails',
+        'schedule': 1.0
+    },
+    'send_evening_reminder_emails': {
+        'task': 'checklist.tasks.send_evening_reminder_emails',
+        'schedule': 1.0
+    }
+}

@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 
+from benjamin.checklist.mailers import create_morning_reminder_email, create_evening_reminder_email
 
-# Create your models here.
+
 class BenjaminUserManager(UserManager):
 
     def _create_user(self, email, password, **extra_fields):
@@ -34,3 +35,11 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = BenjaminUserManager()
+
+    def send_morning_reminder_email(self):
+        email = create_morning_reminder_email(self.email)
+        email.send()
+
+    def send_evening_reminder_email(self):
+        email = create_evening_reminder_email(self.email)
+        email.send()
