@@ -73,10 +73,11 @@ export default class AppState {
 
 
     // Computed
-    @computed get virtues() {
-        return this.virtueSets.find(vs => {
+    @computed get virtues(): Array<Object> {
+        const virtueSet = this.virtueSets.find(vs => {
             return vs.id === this.selectedVirtueSetId
-        }).virtues
+        })
+        return virtueSet ? virtueSet.virtues : []
     }
 
     @computed get virtueEntryDateMap(): Object {
@@ -92,10 +93,11 @@ export default class AppState {
         return dateMap;
     }
 
-    @computed get virtueStars() {
-        return this.virtueSets.find(vs => {
+    @computed get virtueStars(): Array<Object> {
+        const virtueSet = this.virtueSets.find(vs => {
             return vs.id === this.selectedVirtueSetId
-        }).virtue_stars
+        })
+        return virtueSet ? virtueSet.virtues : []
     }
 
     getToday() {

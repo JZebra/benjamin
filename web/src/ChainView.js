@@ -81,7 +81,8 @@ export default class ChainView extends Component {
     }
 
     render(): React$Element<any> {
-        const style = {
+        let style = {
+            border: '',
             backgroundColor: this.getColor(),
             height: '160px',
             width: '160px',
@@ -92,7 +93,7 @@ export default class ChainView extends Component {
         }
 
         if (this.getStatus().isToday) {
-            style['border'] = '8px solid yellow';
+            style.border = '8px solid yellow';
         }
 
         return (
