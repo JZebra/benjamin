@@ -128,6 +128,14 @@ DATABASES = {
     }
 }
 
+# Sends emails to django.core.mail.outbox for dev/testing.
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
