@@ -102,11 +102,6 @@ module.exports = {
       // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.
       // Otherwise, it acts like the "file" loader.
       {
-        test: /\.scss$/,
-        include: paths.appSrc,
-        loaders: ['style', 'css', 'sass']
-      },
-      {
         exclude: [
           /\.html$/,
           // We have to write /\.(js|jsx)(\?.*)?$/ rather than just /\.(js|jsx)$/
@@ -118,7 +113,8 @@ module.exports = {
           /\.(js|jsx)(\?.*)?$/,
           /\.css$/,
           /\.json$/,
-          /\.svg$/
+          /\.sass$/,
+          /\.scss$/,
         ],
         loader: 'url',
         query: {
@@ -138,6 +134,11 @@ module.exports = {
           // directory for faster rebuilds.
           cacheDirectory: true
         }
+      },
+      {
+        test: /\.scss$/,
+        include: paths.appSrc,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
