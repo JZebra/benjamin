@@ -8,7 +8,6 @@ export default class Navbar extends Component {
   handleDayViewClick(): void {
     this.props.appStore.selectDay(this.props.appStore.getToday());
     this.props.viewStore.expandDay();
-    this.props.viewStore.expandVirtueSet(this.props.appStore.selectedVirtueSetId);
   }
 
   handleChainViewClick(): void {

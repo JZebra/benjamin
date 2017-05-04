@@ -8,7 +8,7 @@ import moment from 'moment';
 import SplashScreen from './SplashScreen';
 import ChainViewContainer from './ChainViewContainer';
 import Navbar from './Navbar';
-import VirtueSetList from './VirtueSetList';
+import VirtueSet from './VirtueSet';
 import { _fetch, _format } from './utils';
 
 
@@ -19,7 +19,7 @@ export default class App extends Component {
     const start = _format(moment().startOf('day').subtract(10, 'days'));
     const end = _format(moment().startOf('day'));
 
-    this.props.appStore.loadVirtueSets();
+    this.props.appStore.loadVirtues();
     this.props.appStore.loadVirtueEntries(start, end);
   }
 
@@ -58,15 +58,13 @@ export default class App extends Component {
     )
   }
 
-  renderVirtueSetList() {
+  renderVirtueSet() {
     const appStore = this.props.appStore;
     const viewStore = this.props.viewStore;
-    const virtueSets = this.props.appStore.virtueSets;
 
     return (
-        <VirtueSetList
+        <VirtueSet
           appStore={ appStore }
-          virtueSets={ virtueSets }
           viewStore={ viewStore }
         />
       )
@@ -90,7 +88,7 @@ export default class App extends Component {
             this.renderChainView()
           }
           { this.props.viewStore.currentView.dayView &&
-            this.renderVirtueSetList()
+            this.renderVirtueSet()
           }
           { this.renderDevTools() }
         </div>

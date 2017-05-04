@@ -4,6 +4,12 @@ import { _fetch } from './utils'
 
 export default class AppTransportLayer {
 
+    fetchVirtues(): Promise<string> {
+        const url = 'api/virtues/';
+        return _fetch(url).then(res => res.json()).then(json => json)
+    }
+
+
     fetchVirtueEntries(start: string, end: string): Promise<string> {
         const queryString = `?startDate=${start}&endDate=${end}`;
         const url = 'api/virtue_entries' + queryString;

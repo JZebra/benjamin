@@ -9,6 +9,7 @@ export default class AppState {
     transportLayer: Object;
     // We currently only have the Benjamin virtue set so we never change selectedVirtueSetId
     @observable selectedVirtueSetId = 1;
+    @observable virtues = [];
     @observable virtueSets = [];
     @observable virtueEntries = [];
     @observable isLoading = true;
@@ -18,18 +19,18 @@ export default class AppState {
         this.transportLayer = transportLayer;
     }
 
-    loadVirtueEntries(start: string, end: string): void {
-        this.isLoading = true
-        this.transportLayer.fetchVirtueEntries(start, end).then(fetchedVirtueEntries => {
-            this.virtueEntries = fetchedVirtueEntries;
+    loadVirtues(): void {
+        this.isLoading = true;
+        this.transportLayer.fetchVirtues().then(fetchedVirtues => {
+            this.virtues = fetchedVirtues;
             this.isLoading = false;
         });
     }
 
-    loadVirtueSets(): void {
-        this.isLoading = true;
-        this.transportLayer.fetchVirtueSets().then(fetchedVirtueSets => {
-            this.virtueSets = fetchedVirtueSets;
+    loadVirtueEntries(start: string, end: string): void {
+        this.isLoading = true
+        this.transportLayer.fetchVirtueEntries(start, end).then(fetchedVirtueEntries => {
+            this.virtueEntries = fetchedVirtueEntries;
             this.isLoading = false;
         });
     }
@@ -69,15 +70,6 @@ export default class AppState {
 
     @action selectDay(day: string): void {
         this.selectedDay = day;
-    }
-
-
-    // Computed
-    @computed get virtues(): Array<Object> {
-        const virtueSet = this.virtueSets.find(vs => {
-            return vs.id === this.selectedVirtueSetId
-        })
-        return virtueSet ? virtueSet.virtues : []
     }
 
     @computed get virtueEntryDateMap(): Object {

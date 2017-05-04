@@ -10,14 +10,13 @@ export default class ChainView extends Component {
 
     handleClick(): void {
         this.props.viewStore.expandDay();
-        this.props.viewStore.expandVirtueSet(this.props.appStore.selectedVirtueSetId);
         this.props.appStore.selectDay(this.props.day);
     }
 
     getStatus(): Object {
         // TODO: cache this
         const appStore = this.props.appStore;
-        const virtueCount = appStore.virtueSets[0].virtues.length;
+        const virtueCount = appStore.virtues.length;
         const virtueEntries = this.props.virtueEntryDateMap[this.props.day] || [];
         const successes = virtueEntries.filter(virtueEntry => virtueEntry.value === 1).length;
         const starredVirtue = appStore.virtueStars.find(vs => {

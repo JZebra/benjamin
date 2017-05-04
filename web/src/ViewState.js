@@ -3,23 +3,15 @@
 import { observable, action } from 'mobx';
 
 export default class ViewState {
+    // Observables
     @observable currentView = {
         chainView: true,
         dayView: false,
     }
-
     @observable expandedVirtueSets = [];
     @observable expandedVirtues = [];
 
-    @action expandVirtueSet(virtueSetId: number): void {
-        this.expandedVirtueSets.push(virtueSetId);
-    }
-
-    @action collapseVirtueSet(virtueSetId: number): void {
-        this.expandedVirtueSets =
-        this.expandedVirtueSets.filter(id => id !== virtueSetId);
-    }
-
+    // Actions
     @action expandVirtue(virtueId: number): void {
         this.expandedVirtues.push(virtueId);
     }
