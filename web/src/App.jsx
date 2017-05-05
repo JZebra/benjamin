@@ -9,6 +9,7 @@ import SplashScreen from './SplashScreen';
 import ChainViewContainer from './ChainViewContainer';
 import Navbar from './Navbar';
 import VirtueSet from './VirtueSet';
+import ScrollView from './ScrollView';
 import { _fetch, _format } from './utils';
 
 
@@ -41,13 +42,6 @@ export default class App extends Component {
     }
   }
 
-  renderDayView() {
-    return (
-      <div />
-      //<DayViewContainer />
-    )
-  }
-
   renderNavBar() {
     const appStore = this.props.appStore;
     const viewStore = this.props.viewStore;
@@ -72,6 +66,14 @@ export default class App extends Component {
       )
   }
 
+  renderScrollView() {
+    return (
+      <ScrollView
+        appStore={this.props.appStore}
+        viewStore={this.props.viewStore}
+      />)
+  }
+
   renderDevTools() {
     // TODO: conditionally render this in dev environments
     return (
@@ -91,6 +93,9 @@ export default class App extends Component {
           }
           { this.props.viewStore.currentView.dayView &&
             this.renderVirtueSet()
+          }
+          { this.props.viewStore.currentView.scrollView &&
+            this.renderScrollView()
           }
           { this.renderDevTools() }
         </div>

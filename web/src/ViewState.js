@@ -7,8 +7,8 @@ export default class ViewState {
     @observable currentView = {
         chainView: true,
         dayView: false,
+        scrollView: false,
     }
-    @observable expandedVirtueSets = [];
     @observable expandedVirtues = [];
 
     // Actions
@@ -21,17 +21,27 @@ export default class ViewState {
         this.expandedVirtues.filter(id => id !== virtueId);
     }
 
-    @action expandDay(): void {
+    @action openDayView(): void {
         this.currentView = {
             chainView: false,
             dayView: true,
+            scrollView: false,
         };
     }
 
-    @action collapseDay(): void {
+    @action openChainView(): void {
         this.currentView = {
             chainView: true,
             dayView: false,
+            scrollView: false,
+        }
+    }
+
+    @action openScrollView(): void {
+        this.currentView = {
+            chainView: false,
+            dayView: false,
+            scrollView: true,
         }
     }
 }

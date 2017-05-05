@@ -12,7 +12,7 @@ export default class AppState {
     @observable virtues = [];
     @observable virtueEntries = [];
     @observable virtueStars = [];
-    @observable incompleteFetches = [];
+    @observable incompleteFetches = 0;
     @observable selectedDay = '';
 
     constructor(transportLayer: Object) {

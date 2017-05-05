@@ -9,7 +9,7 @@ import { FaTrophy } from 'react-icons/lib/fa';
 export default class ChainView extends Component {
 
     handleClick(): void {
-        this.props.viewStore.expandDay();
+        this.props.viewStore.openDayView();
         this.props.appStore.selectDay(this.props.day);
     }
 

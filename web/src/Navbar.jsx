@@ -7,11 +7,15 @@ export default class Navbar extends Component {
 
   handleDayViewClick(): void {
     this.props.appStore.selectDay(this.props.appStore.getToday());
-    this.props.viewStore.expandDay();
+    this.props.viewStore.openDayView();
   }
 
   handleChainViewClick(): void {
-    this.props.viewStore.collapseDay()
+    this.props.viewStore.openChainView()
+  }
+
+  handleScrollViewClick(): void {
+    this.props.viewStore.openScrollView()
   }
 
   render(): React$Element<any> {
@@ -34,7 +38,13 @@ export default class Navbar extends Component {
             <li className="nav-item">
               <button id="navbar-overview-button" onClick={ this.handleChainViewClick.bind(this) }
                 type="button" className="nav-link btn btn-outline-success">
-                Overview
+                Weekly Overview
+              </button>
+            </li>
+            <li className="nav-item">
+              <button id="navbar-scroll-button" onClick={ this.handleScrollViewClick.bind(this) }
+                type="button" className="nav-link btn btn-outline-success">
+                Monthly Overview
               </button>
             </li>
           </ul>
