@@ -1,0 +1,15 @@
+// TODO: restructure the scss files to be similar to http://vanseodesign.com/css/sass-directory-structures/
+// app.js imports main.scss
+// main.scss imports scss subdirectories with @import
+
+@import 'bootstrap-extend';
+
+.ScrollDay-row {
+    border: 1px solid pink;
+    @include make-col-span($grid-columns);
+}
+
+.ScrollDay-spacer, .ScrollDay-VirtueEntry {
+    text-align: center;
+    @include make-col(1, $grid-columns);
+}

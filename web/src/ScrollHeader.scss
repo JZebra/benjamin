@@ -1,0 +1,11 @@
+@import 'bootstrap-extend';
+
+.ScrollHeader-row {
+    border: 1px solid lightgreen;
+    @include make-col-span($grid-columns);
+}
+
+.ScrollHeader-spacer, .ScrollHeader-virtue {
+    text-align: center;
+    @include make-col(1, $grid-columns);
+}

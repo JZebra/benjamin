@@ -4,10 +4,20 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
 import ScrollDay from './ScrollDay';
+import ScrollHeader from './ScrollHeader';
 
 
 @observer
 export default class ScrollView extends Component {
+
+    renderHeader() {
+        return (
+            <ScrollHeader
+                appStore={ this.props.appStore }
+                viewStore={ this.props.viewStore }
+            />
+        )
+    }
 
     renderDays() {
         let dates = Object.keys(this.props.appStore.virtueEntryDateMap)
@@ -26,7 +36,8 @@ export default class ScrollView extends Component {
     render() {
         return (
             <div className="scroll-container container-fluid">
-                {this.renderDays()}
+                { this.renderHeader() }
+                { this.renderDays() }
             </div>
         )
     }
