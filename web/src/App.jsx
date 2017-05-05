@@ -16,12 +16,13 @@ import { _fetch, _format } from './utils';
 export default class App extends Component {
 
   componentDidMount() {
-    const start = _format(moment().startOf('day').subtract(10, 'days'));
-    const end = _format(moment().startOf('day'));
+    // const start = _format(moment().startOf('day').subtract(10, 'days'));
+    // const end = _format(moment().startOf('day'));
 
     this.props.appStore.loadVirtues();
     this.props.appStore.loadVirtueStars();
-    this.props.appStore.loadVirtueEntries(start, end);
+    // this.props.appStore.loadVirtueEntries(start, end);
+    this.props.appStore.loadAllVirtueEntries();
   }
 
   renderChainView() {

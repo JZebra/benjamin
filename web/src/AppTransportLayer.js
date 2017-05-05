@@ -21,6 +21,11 @@ export default class AppTransportLayer {
         return _fetch(url).then(res => res.json()).then(json => json);
     }
 
+    fetchAllVirtueEntries() {
+        const url = 'api/virtue_entries';
+        return _fetch(url).then(res => res.json()).then(json => json);
+    }
+
     postVirtueEntry(date:string , value:string, virtue_id: string): Promise<string> {
         const url = 'api/virtue_entries/';
 

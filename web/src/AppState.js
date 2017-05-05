@@ -35,6 +35,14 @@ export default class AppState {
         });
     }
 
+    loadAllVirtueEntries(): void {
+        this.incompleteFetches++
+        this.transportLayer.fetchAllVirtueEntries().then(fetchedVirtueEntries => {
+            this.virtueEntries = fetchedVirtueEntries;
+            this.incompleteFetches--
+        });
+    }
+
     loadVirtueStars(): void {
         this.incompleteFetches++
         this.transportLayer.fetchVirtueStars().then(fetchedVirtueStars => {
