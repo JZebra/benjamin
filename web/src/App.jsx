@@ -20,6 +20,7 @@ export default class App extends Component {
     const end = _format(moment().startOf('day'));
 
     this.props.appStore.loadVirtues();
+    this.props.appStore.loadVirtueStars();
     this.props.appStore.loadVirtueEntries(start, end);
   }
 

@@ -15,6 +15,7 @@ export default class VirtueSet extends Component {
 
     return appStore.virtues.map((virtue) => {
       return <Virtue
+        key={ virtue.id }
         appStore={ appStore }
         viewStore={ viewStore }
         virtue={ virtue } />

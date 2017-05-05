@@ -12,24 +12,19 @@ export default class VirtueStar extends Component {
     this.props.appStore.recordVirtueStar(this.props.appStore.selectedDay, this.props.virtueId);
   }
 
-  // Stub
-  render() {
-    return <div />
+  render(): React$Element<any> {
+    const selectedDay = this.props.appStore.selectedDay;
+    const size = 30;
+    const virtueStars = this.props.appStore.virtueStars;
+    const starred = virtueStars.filter(VirtueStar => {
+      return VirtueStar.date === selectedDay && VirtueStar.virtue_id === this.props.virtueId
+    })
+
+    return (
+      starred.length > 0 ?
+      <FaStar size={size} onClick={ this.handleClick.bind(this) } /> :
+      <FaStarO size={size} onClick={ this.handleClick.bind(this) } />
+    )
   }
-
-  // render(): React$Element<any> {
-  //   const selectedDay = this.props.appStore.selectedDay;
-  //   const size = 30;
-  //   const virtueStars = this.props.appStore.virtueSets[0].virtue_stars;
-  //   const starred = virtueStars.filter(VirtueStar => {
-  //     return VirtueStar.date === selectedDay && VirtueStar.virtue_id === this.props.virtueId
-  //   })
-
-  //   return (
-  //     starred.length > 0 ?
-  //     <FaStar size={size} onClick={ this.handleClick.bind(this) } /> :
-  //     <FaStarO size={size} onClick={ this.handleClick.bind(this) } />
-  //   )
-  // }
 }
 

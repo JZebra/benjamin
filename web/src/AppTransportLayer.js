@@ -9,17 +9,16 @@ export default class AppTransportLayer {
         return _fetch(url).then(res => res.json()).then(json => json)
     }
 
+    fetchVirtueStars(): Promise<string> {
+        const url = 'api/virtue_stars/';
+        return _fetch(url).then(res => res.json()).then(json => json)
+    }
 
     fetchVirtueEntries(start: string, end: string): Promise<string> {
         const queryString = `?startDate=${start}&endDate=${end}`;
         const url = 'api/virtue_entries' + queryString;
 
         return _fetch(url).then(res => res.json()).then(json => json);
-    }
-
-    fetchVirtueSets(): Promise<string> {
-        const url = 'api/virtue_sets/';
-        return _fetch(url).then(res => res.json()).then(json => json)
     }
 
     postVirtueEntry(date:string , value:string, virtue_id: string): Promise<string> {

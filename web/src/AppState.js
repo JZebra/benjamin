@@ -10,9 +10,9 @@ export default class AppState {
     // We currently only have the Benjamin virtue set so we never change selectedVirtueSetId
     @observable selectedVirtueSetId = 1;
     @observable virtues = [];
-    @observable virtueSets = [];
     @observable virtueEntries = [];
-    @observable isLoading = true;
+    @observable virtueStars = [];
+    @observable incompleteFetches = [];
     @observable selectedDay = '';
 
     constructor(transportLayer: Object) {
@@ -20,18 +20,26 @@ export default class AppState {
     }
 
     loadVirtues(): void {
-        this.isLoading = true;
+        this.incompleteFetches++
         this.transportLayer.fetchVirtues().then(fetchedVirtues => {
             this.virtues = fetchedVirtues;
-            this.isLoading = false;
+            this.incompleteFetches--
         });
     }
 
     loadVirtueEntries(start: string, end: string): void {
-        this.isLoading = true
+        this.incompleteFetches++
         this.transportLayer.fetchVirtueEntries(start, end).then(fetchedVirtueEntries => {
             this.virtueEntries = fetchedVirtueEntries;
-            this.isLoading = false;
+            this.incompleteFetches--
+        });
+    }
+
+    loadVirtueStars(): void {
+        this.incompleteFetches++
+        this.transportLayer.fetchVirtueStars().then(fetchedVirtueStars => {
+            this.virtueStars = fetchedVirtueStars;
+            this.incompleteFetches--
         });
     }
 
@@ -57,14 +65,14 @@ export default class AppState {
 
     // Actions
     @action replaceVirtueStar(newVirtueStar: Object): void {
-        let oldVirtueStar = this.virtueSets[0].virtue_stars.find(vs => {
+        let oldVirtueStar = this.virtueStars.find(vs => {
             return vs.date === newVirtueStar.date
         })
 
         if (oldVirtueStar) {
             oldVirtueStar.virtue_id = newVirtueStar.virtue_id
         } else {
-            this.virtueSets[0].virtue_stars.push(newVirtueStar)
+            this.virtueStars.push(newVirtueStar)
         }
     }
 
@@ -85,11 +93,8 @@ export default class AppState {
         return dateMap;
     }
 
-    @computed get virtueStars(): Array<Object> {
-        const virtueSet = this.virtueSets.find(vs => {
-            return vs.id === this.selectedVirtueSetId
-        })
-        return virtueSet ? virtueSet.virtues : []
+    @computed get isLoading(): Boolean {
+        return this.incompleteFetches !== 0
     }
 
     getToday() {
