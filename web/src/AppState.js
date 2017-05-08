@@ -90,14 +90,39 @@ export default class AppState {
 
     @computed get virtueEntryDateMap(): Object {
         let dateMap = {};
-        this.virtueEntries.forEach(virtueEntry => {
-            const key = virtueEntry.date;
-            if (dateMap[key] === undefined) {
-                dateMap[key] = [virtueEntry];
+
+        let sorted = this.virtueEntries.sort((a, b) => {
+            if (a.date < b.date) {
+                return -1;
+            } else if (a.date > b.date) {
+                return 1;
             } else {
-                dateMap[key].push(virtueEntry);
+                return 0;
             }
         });
+
+        let startDate = new Date(sorted[0].date);
+        let endDate = new Date();
+
+        let dates = [];
+
+        while (startDate < endDate) {
+            dates.push(startDate);
+            let newDate = startDate.setDate(startDate.getDate() + 1);
+            startDate = new Date(newDate);
+        }
+
+        let formattedDates = dates.map(date => moment(date).format('YYYY-MM-DD'));
+
+        formattedDates.forEach(date => {
+            dateMap[date] = [];
+        });
+
+        sorted.forEach(virtueEntry => {
+            const key = virtueEntry.date;
+            dateMap[key].push(virtueEntry);
+        });
+
         return dateMap;
     }
 
