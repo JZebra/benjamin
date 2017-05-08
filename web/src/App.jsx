@@ -16,7 +16,7 @@ import { _fetch, _format } from './utils';
 @observer
 export default class App extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     // const start = _format(moment().startOf('day').subtract(10, 'days'));
     // const end = _format(moment().startOf('day'));
 
