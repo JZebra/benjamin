@@ -53,15 +53,7 @@ export default class AppState {
 
     recordVirtueEntry(date: string, value: string, virtue_id: string) {
         this.transportLayer.postVirtueEntry(date, value, virtue_id).then(recordedVirtueEntry => {
-            let oldVirtueEntry = this.virtueEntries.find(ve => {
-                return ve.date === date && ve.virtue_id === virtue_id;
-            });
-
-            if (oldVirtueEntry) {
-                oldVirtueEntry.value = value;
-            } else {
-                this.virtueEntries.push(recordedVirtueEntry);
-            }
+            this.replaceVirtueEntry(recordedVirtueEntry);
         });
     }
 
@@ -72,6 +64,18 @@ export default class AppState {
     }
 
     // Actions
+    @action replaceVirtueEntry(newVirtueEntry: Object): void {
+        let oldVirtueEntry = this.virtueEntries.find(ve => {
+            return ve.date === newVirtueEntry.date && ve.virtue_id === newVirtueEntry.virtue_id;
+        });
+
+        if (oldVirtueEntry) {
+            oldVirtueEntry.value = newVirtueEntry.value;
+        } else {
+            this.virtueEntries.push(newVirtueEntry);
+        }
+    }
+
     @action replaceVirtueStar(newVirtueStar: Object): void {
         let oldVirtueStar = this.virtueStars.find(vs => {
             return vs.date === newVirtueStar.date

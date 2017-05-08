@@ -10,6 +10,17 @@ import './ScrollDay.scss';
 @observer
 export default class ScrollDay extends Component {
 
+    handleVEClick(v, ve) {
+        const { appStore, date } = this.props;
+        if (ve) {
+            const newValue = ve.value ? '0' : '1';
+            appStore.recordVirtueEntry(date, newValue, v.id)
+        } else {
+            const newValue = '1';
+            appStore.recordVirtueEntry(date, newValue, v.id)
+        }
+    }
+
     renderValue(value: number) {
         if (value === 1) {
             return <FaCheck />;
@@ -20,6 +31,7 @@ export default class ScrollDay extends Component {
         }
     }
 
+
     renderVirtueEntries() {
         // TODO: maintain order between Scrolldays
         const virtues = this.props.appStore.virtues;
@@ -27,19 +39,12 @@ export default class ScrollDay extends Component {
 
         return virtues.map(v => {
             const ve = virtueEntries.find(ve => ve.virtue_id === v.id);
-            if (ve) {
-                return (
-                    <div className="ScrollDay-VirtueEntry">
-                        { this.renderValue(ve.value) }
-                    </div>
-                )
-            } else {
-                return (
-                    <div className="ScrollDay-VirtueEntry">
-                        <span>?</span>
-                    </div>
-                )
-            }
+            const value = ve ? this.renderValue(ve.value) : <span>?</span>;
+            return (
+                <div onClick={ this.handleVEClick.bind(this, v, ve) } className="ScrollDay-VirtueEntry">
+                    { value }
+                </div>
+            )
         });
     }
 
