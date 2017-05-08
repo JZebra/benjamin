@@ -45,7 +45,11 @@ export default class ScrollDay extends Component {
             const className = vs ? "ScrollDay-VirtueEntry starred" : "ScrollDay-VirtueEntry";
 
             return (
-                <div onClick={ this.handleVEClick.bind(this, v, ve) } className={className} >
+                <div
+                    onClick={ this.handleVEClick.bind(this, v, ve) }
+                    className={ className }
+                    key={ v.id }
+                    >
                     { value }
                 </div>
             )
