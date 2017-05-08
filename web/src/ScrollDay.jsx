@@ -4,14 +4,13 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { FaCheck, FaTimesCircle } from 'react-icons/lib/fa';
 
-
 import './ScrollDay.scss';
 
 
 @observer
 export default class ScrollDay extends Component {
 
-    renderValue(value) {
+    renderValue(value: number) {
         if (value === 1) {
             return <FaCheck />;
         }
@@ -45,7 +44,6 @@ export default class ScrollDay extends Component {
     }
 
     render() {
-
         return (
             <div className="row ScrollDay-row">
                 <div className="ScrollDay-date">

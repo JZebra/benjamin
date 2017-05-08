@@ -126,7 +126,7 @@ export default class AppState {
         return dateMap;
     }
 
-    @computed get isLoading(): Boolean {
+    @computed get isLoading(): boolean {
         return this.incompleteFetches !== 0
     }
 
