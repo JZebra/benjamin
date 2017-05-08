@@ -19,20 +19,29 @@ export default class ScrollDay extends Component {
         if (value === 0) {
             return <FaTimesCircle />;
         }
-
-        return <p>?</p>;
     }
-
 
     renderVirtueEntries() {
         // TODO: maintain order between Scrolldays
-        return this.props.appStore.virtueEntryDateMap[this.props.date].map(ve => {
-            return (
-                <div className="ScrollDay-VirtueEntry">
-                    { this.renderValue(ve.value) }
-                </div>
-            )
-        })
+        const virtues = this.props.appStore.virtues;
+        const virtueEntries = this.props.appStore.virtueEntryDateMap[this.props.date];
+
+        return virtues.map(v => {
+            const ve = virtueEntries.find(ve => ve.virtue_id === v.id);
+            if (ve) {
+                return (
+                    <div className="ScrollDay-VirtueEntry">
+                        { this.renderValue(ve.value) }
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="ScrollDay-VirtueEntry">
+                        <span>?</span>
+                    </div>
+                )
+            }
+        });
     }
 
     render() {
