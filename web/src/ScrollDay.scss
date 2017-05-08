@@ -5,11 +5,19 @@
 @import 'bootstrap-extend';
 
 .ScrollDay-row {
-    border: 1px solid pink;
+    border: 1px solid grey;
     @include make-col-span($grid-columns);
+}
+
+.ScrollDay-date {
+    @include make-col(2, $grid-columns);
 }
 
 .ScrollDay-spacer, .ScrollDay-VirtueEntry {
     text-align: center;
     @include make-col(1, $grid-columns);
+
+    &.starred {
+        background-color: lightblue;
+    }
 }

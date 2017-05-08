@@ -33,15 +33,19 @@ export default class ScrollDay extends Component {
 
 
     renderVirtueEntries() {
-        // TODO: maintain order between Scrolldays
-        const virtues = this.props.appStore.virtues;
-        const virtueEntries = this.props.appStore.virtueEntryDateMap[this.props.date];
+        const date = this.props.date;
+        const { virtues, virtueStars } = this.props.appStore
+        const virtueEntries = this.props.appStore.virtueEntryDateMap[date];
 
         return virtues.map(v => {
             const ve = virtueEntries.find(ve => ve.virtue_id === v.id);
             const value = ve ? this.renderValue(ve.value) : <span>?</span>;
+            const vs = virtueStars.find(vs => vs.date === date && vs.virtue_id === v.id);
+            // TODO: refactor with classnames library if we do this a lot.
+            const className = vs ? "ScrollDay-VirtueEntry starred" : "ScrollDay-VirtueEntry";
+
             return (
-                <div onClick={ this.handleVEClick.bind(this, v, ve) } className="ScrollDay-VirtueEntry">
+                <div onClick={ this.handleVEClick.bind(this, v, ve) } className={className} >
                     { value }
                 </div>
             )
@@ -53,8 +57,6 @@ export default class ScrollDay extends Component {
             <div className="row ScrollDay-row">
                 <div className="ScrollDay-date">
                     {this.props.date}
-                </div>
-                <div className="ScrollDay-spacer">
                 </div>
                 { this.renderVirtueEntries() }
             </div>

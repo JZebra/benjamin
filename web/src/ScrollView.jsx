@@ -21,7 +21,7 @@ export default class ScrollView extends Component {
 
     renderDays() {
         let dates = Object.keys(this.props.appStore.virtueEntryDateMap)
-        dates.sort()
+        dates.sort().reverse();
         return dates.map(date => {
             return (
                 <ScrollDay
