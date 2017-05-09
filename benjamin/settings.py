@@ -170,6 +170,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     # os.path.join(BASE_DIR, 'benjamin/static/'),
     os.path.join(BASE_DIR, 'web/build/static/'),
+    os.path.join(BASE_DIR, 'benjamin/registration/static'),
 )
 
 # Tests

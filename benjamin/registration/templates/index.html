@@ -1,7 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Benjamin - Be Virtuous!{% endblock %}
 
 {% block content %}
+
+<div class="homepage-hero-module">
+    <div class="video-container">
+        <div class="filter"></div>
+        <video autoplay loop class="fillWidth" poster="{% static 'Clouds_Lapse/Clouds_Lapse.jpg' %}">
+            <source src="{% static 'Clouds_Lapse/Clouds_Lapse.mp4' %}" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <source src="{% static 'Clouds_Lapse/Clouds_Lapse.webm' %}" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+        </video>
+    </div>
+</div>
+<div class="jumbotron">
+    <h1 class="display-1">Be. Virtuous.</h1>
+    <p class="lead">Four score and some years ago, Benjamin Franklin resolved to be a better man. Now you can too.</p>
+    <hr class="my-4">
+    <p class="lead">
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get the app</a>
+    </p>
+</div>
 
 {% endblock %}
