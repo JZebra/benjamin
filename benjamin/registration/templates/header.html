@@ -1,8 +1,39 @@
-<nav class="navbar navbar-dark bg-faded">
+<nav class="navbar navbar-inverse bg-success navbar-toggleable-sm">
+    <button class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navbar-collapse">
+        Menu
+    </button>
     <a href="/" class="navbar-brand">
         Benjamin
     </a>
-    <a href="{% url 'app_login' %}" class="float-right">Login</a>
-    <a href="{% url 'app_logout' %}" class="float-right">Logout</a>
-    <a href="{% url 'password_reset' %}" class="float-right">Reset Password</a>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a
+                        href="{% url 'app_logout' %}"
+                        type="button"
+                        class="nav-link btn btn-outline-success">
+                        Logout
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a
+                        href="{% url 'app_login' %}"
+                        type="button"
+                        class="nav-link btn btn-outline-success">
+                        Login
+                    </a>
+                </li>
+            {% endif %}
+             <li class="nav-item">
+                <a
+                    href="{% url 'password_reset' %}"
+                    type="button"
+                    class="nav-link btn btn-outline-success">
+                    Reset Password
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>
