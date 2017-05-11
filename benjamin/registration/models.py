@@ -34,3 +34,8 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = BenjaminUserManager()
+
+    def save(self, *args, **kwargs):
+        if not self.username:
+            self.username = ''
+        super(User, self).save(*args, **kwargs)
